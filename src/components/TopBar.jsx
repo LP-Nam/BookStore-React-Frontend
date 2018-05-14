@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import {BrowserRouter,Route,	Link	} from 'react-router-dom'
 class TopBar extends React.Component{
     render(){
         return(
@@ -7,13 +7,13 @@ class TopBar extends React.Component{
                 <div className="navbar navbar-inverse">
                     <ul className="nav navbar-nav pull-right">
                         <li className="frmLogin">
-                            <form onsubmit="return KiemTraDangNhap()" method="post" action="index.php?a=10">
+                            <form>
                                 <input type="text" className="form-control" placeholder="Tên đăng nhập" name="username" id="txtUsername"></input>
                                 <input type="password" className="form-control" placeholder="Mật khẩu" name="password" id="txtPassword"></input>
                                 <button type="submit" className="btn">Đăng nhập</button>
                             </form>
                          </li>
-                        <li><a href="index.php?a=8" className="p0"><button class="btn">Đăng ký</button></a></li>
+                        <li><Link to="/AccountRegister"><button class="btn">Đăng Kí</button></Link></li>
                     </ul>
                 </div>
             </div>

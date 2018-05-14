@@ -12,9 +12,9 @@ class Navigation extends React.Component{
                         <input type="hidden" name="a" value="5"></input>
                         <div className="input-group">
                             <input type="search" name="TenSach" id="TuKhoa" placeholder="Tên sách" class="form-control"></input>
-                            <span className="input-group-btn">
+                            {/* <span className="input-group-btn">
                                 <button type="button" className="btn btn-default" onclick="TimKiemNangCao();">Tuỳ chọn</button>
-                            </span>
+                            </span> */}
                         </div>
                         <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
                         <div id="advSearch">
