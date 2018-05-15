@@ -4,18 +4,19 @@ import ListGroupItem from "./ListGroupItem.jsx";
 class ListGroup extends Component {
 
 	render() {
+		const groups = this.props.groupItems.map((value, index) => {
+			const ten = value.TenHangSanXuat;
+			const id = value.MaHangSanXuat;
+
+			return (
+				<ListGroupItem id={id} tenTacGia={ten}/>
+			);
+		});
 		return(
-			// <ul className="list-group">
-			// 	<ListGroupItem/>
-			// 	<ListGroupItem/>
-			// 	<ListGroupItem/>
-			// 	<ListGroupItem/>
-			// 	<ListGroupItem/>
-			// </ul>
 			<div className="panel panel-default">
 			<div className="panel-heading">NHÀ XUẤT BẢN</div>
 				<ul className="list-group">
-					<li><a className="list-group-item" href="<?php echo $url; ?>">asdfasdf</a></li>
+					{groups}
 				</ul>
 			</div>
 		);
