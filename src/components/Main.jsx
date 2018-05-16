@@ -21,7 +21,8 @@ class Main extends Component {
 	}
 
 	componentDidMount() {
-    fetch("http://localhost:3001/api/product/new")
+		//fetch("http://localhost:3001/api/product/new")
+		fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
       .then(res => res.json())
       .then(
         (result) => {
@@ -37,7 +38,8 @@ class Main extends Component {
           });
         }
       );
-      fetch("http://localhost:3001/api/product/best-seller")
+			//fetch("http://localhost:3001/api/product/best-seller")
+			fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
       .then(res => res.json())
       .then(
         (result) => {
@@ -76,8 +78,8 @@ class Main extends Component {
 				<div className="container">
 					<div className="row" id="page">
 						<div className="w25p pull-left">
-							<ListGroup />
-							<ListType />
+							{/* <ListGroup />
+							<ListType /> */}
 						</div>
 						<div className="w72p pull-right">
 							<Content newItems={this.state.newItems} mostPopularItems={this.state.mostPopularItems} />
