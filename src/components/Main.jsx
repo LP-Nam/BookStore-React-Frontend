@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import Card from "./Card.jsx";
 import ListGroup from "./ListGroup.jsx";
 import TopBar from "./TopBar"
-import Navigation from"./Navigation";
+import Navigation from "./Navigation";
 import ListType from "./ListType";
 import Footer from "./Footer";
 import Content from "./Content";
-import {BrowserRouter,Route,	Link	} from 'react-router-dom'
+import MainRouter from "./MainRouter";
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 class Main extends Component {
 
 	constructor(props) {
@@ -14,48 +15,48 @@ class Main extends Component {
 
 		this.render = this.render.bind(this);
 
-		this.state = {
-			newItems: [{}],
-			mostPopularItems: [{}]
-		}
+		// this.state = {
+		// 	newItems: [{}],
+		// 	mostPopularItems: [{}]
+		// }
 	}
 
-	componentDidMount() {
-		//fetch("http://localhost:3001/api/product/new")
-		fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
-      .then(res => res.json())
-      .then(
-        (result) => {
-        	console.log(result);
-          this.setState({
-            newItems: result
-          });
-        },
+	// componentDidMount() {
+	// 	fetch("http://localhost:3001/api/product/new")
+	// 	//fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
+	//     .then(res => res.json())
+	//     .then(
+	//       (result) => {
+	//       	console.log(result);
+	//         this.setState({
+	//           newItems: result
+	//         });
+	//       },
 
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      );
-			//fetch("http://localhost:3001/api/product/best-seller")
-			fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
-      .then(res => res.json())
-      .then(
-        (result) => {
-        	console.log(result);
-          this.setState({
-            mostPopularItems: result
-          });
-        },
+	//       (error) => {
+	//         this.setState({
+	//           error
+	//         });
+	//       }
+	//     );
+	// 		fetch("http://localhost:3001/api/product/best-seller")
+	// 		//fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
+	//     .then(res => res.json())
+	//     .then(
+	//       (result) => {
+	//       	console.log(result);
+	//         this.setState({
+	//           mostPopularItems: result
+	//         });
+	//       },
 
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      );
-  	}
+	//       (error) => {
+	//         this.setState({
+	//           error
+	//         });
+	//       }
+	//     );
+	// 	}
 
 	render() {
 
@@ -71,20 +72,23 @@ class Main extends Component {
 		// 	);
 		// });
 
-		return(
+		return (
 			<div>
 				<TopBar />
-				<Navigation/>
+				<Navigation />
+
 				<div className="container">
 					<div className="row" id="page">
 						<div className="w25p pull-left">
-							{/* <ListGroup />
-							<ListType /> */}
+							<ListGroup />
+							<ListType />
 						</div>
 						<div className="w72p pull-right">
-							<Content newItems={this.state.newItems} mostPopularItems={this.state.mostPopularItems} />
+							{/* <Content newItems={this.state.newItems} mostPopularItems={this.state.mostPopularItems} /> */}
+							{/* <Content/> */}
+							<MainRouter />
 						</div>
-					</div> 
+					</div>
 				</div>
 				<Footer />
 			</div>

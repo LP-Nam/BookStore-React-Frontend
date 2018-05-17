@@ -13,7 +13,7 @@ class TopBar extends React.Component{
                                 <button type="submit" className="btn">Đăng nhập</button>
                             </form>
                          </li>
-                        <li><Link to="/AccountRegister"><button class="btn">Đăng Kí</button></Link></li>
+                        <li><Link to="/AccountRegister"><button className="btn">Đăng Kí</button></Link></li>
                     </ul>
                 </div>
             </div>

@@ -1,14 +1,9 @@
 import React from"react";
 import Card from "./Card.jsx";
-class NewBooks extends React.Component{
-
-	constructor(props) {
-		super(props);
-	}
+class ListCards extends React.Component{
 
     render()
     {
-
     	const cards = this.props.items.map((sach, index) => {
 			const ten = sach.TenSanPham;
 			const url = sach.HinhURL;
@@ -23,10 +18,10 @@ class NewBooks extends React.Component{
 
         return(
             <div class="clearfix">
-                <h2 class="page-header">Sách mới</h2>
+                <h2 class="page-header">{this.props.nameHeader}</h2>
                 {cards}
             </div>
         )
     }
 }
-export default NewBooks;
+export default ListCards;

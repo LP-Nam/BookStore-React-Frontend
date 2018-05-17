@@ -1,20 +1,50 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ListGroupItem from "./ListGroupItem.jsx";
 
 class ListGroup extends Component {
 
+	constructor(props) {
+		super(props);
+
+		this.render = this.render.bind(this);
+
+		this.state = {
+			groupItems: [{}],
+		}
+	}
+
+	componentDidMount() {
+		fetch("http://localhost:3001/api/product/publisher")
+			//fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
+			.then(res => res.json())
+			.then(
+				(result) => {
+					console.log(result);
+					this.setState({
+						groupItems: result
+					});
+				},
+
+				(error) => {
+					this.setState({
+						error
+					});
+				}
+			);
+	}
+
 	render() {
-		const groups = this.props.groupItems.map((value, index) => {
+		const groups = this.state.groupItems.map((value, index) => {
 			const ten = value.TenHangSanXuat;
 			const id = value.MaHangSanXuat;
 
 			return (
-				<ListGroupItem id={id} tenTacGia={ten}/>
+				<ListGroupItem id={id} tenTacGia={ten} url='/publisher'/>
 			);
 		});
-		return(
+		return (
 			<div className="panel panel-default">
-			<div className="panel-heading">NHÀ XUẤT BẢN</div>
+				<div className="panel-heading">NHÀ XUẤT BẢN</div>
 				<ul className="list-group">
 					{groups}
 				</ul>
