@@ -3,12 +3,14 @@ import Content from "./Content";
 import React from "react";
 import BookByCategory from "./BookByCategory";
 import BookByPublisher from "./BookByPublisher";
+import BookDetail from "./BookDetail";
 
 const MainRouter = () =>(
     <Switch>
         <Route exact path='/' component={Content}/>
         <Route path='/category/:id' component={BookByCategory}/>
         <Route path='/publisher/:id' component={BookByPublisher}/>
+        <Route path='/product/:bookid' component={BookDetail}/>
     </Switch>
 );
 

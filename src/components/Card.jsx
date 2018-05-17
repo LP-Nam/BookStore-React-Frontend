@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 class Card extends Component {
 
@@ -6,6 +7,7 @@ class Card extends Component {
 		super(props);
 
 		this.state = {
+			maSach: "",
 			tenSach: "",
 			tenTacGia: "",
 			giaBan: 0,
@@ -23,12 +25,12 @@ class Card extends Component {
 		return(
 			<div className="w12e pull-left" title={this.props.tenSach}>
 				<div className="thumbnail productThumb">
-					<a href="">
+					<Link to={`/product/${this.props.maSach}`}>
 						<img src={this.props.hinhAnh} alt="image" />
 						<h4>{this.editBookName()}</h4>
 						<h4 className="small">{this.props.tenTacGia}</h4>
 						<h4 className="price">{this.props.giaBan},000 VNĐ</h4>
-					</a>
+					</Link>
 				</div>
 			</div>
 		);
