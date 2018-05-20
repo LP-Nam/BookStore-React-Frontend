@@ -9,8 +9,8 @@ export default class OrderBill extends React.Component{
                 <td>c</td>
                 <td>d</td>
                 <td>easdfasfasfd</td>
-                <td><a href="index.php?a=7&id=<?php echo $row['MaDonDatHang']; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a onclick="OpenOrderDetail(<?php echo $row['MaDonDatHang']; ?>);"><span class="glyphicon glyphicon-th-list"></span></a></td>
+                <td><a ><span className="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a ><span className="glyphicon glyphicon-th-list"></span></a></td>
             </tr>
             
         )
