@@ -1,7 +1,56 @@
 import React, { Component } from 'react';
 
 class ListPublisher extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            itemsListPublisher: [{}]
+        }
+    }
+    componentDidMount(){
+        fetch(`http://localhost:3001/api/admin/ListPublisher`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log(result);
+          this.setState({
+            itemsListPublisher: result
+          });
+        },
+
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      );
+    }
     render() {
+        var icon = new String("glyphicon glyphicon-")
+        if(this.props.bixoa == 1)
+        {
+            icon = icon+"ok";
+        }
+        else
+            icon = icon +"remove"
+        const items = this.state.itemsListPublisher.map((value, index) => {
+			return (
+                 <tr>
+                    <td>{value.MaHangSanXuat}</td>
+                    <td>{value.TenHangSanXuat}</td>
+                    <td>
+                        <a>
+                            <span className="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a>
+                            <span className={icon}></span>
+                        </a>
+                    </td>
+             </tr>
+			);
+		});
         return (
             <div>
                  <form  className="navbar-form pull-right" id="searchBox">
@@ -18,20 +67,7 @@ class ListPublisher extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1asdfasdfasdf</td>
-                            <td>2asdfasdfasdf</td>
-                            <td>
-                                <a>
-                                    <span className="glyphicon glyphicon-pencil"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <a>
-                                    <span className="glyphicon glyphicon-ok"></span>
-                                </a>
-                            </td>
-                        </tr>
+                        {items}
                     </tbody>
                 </table>
             </div>

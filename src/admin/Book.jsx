@@ -2,14 +2,21 @@ import  React, { Component } from 'react';
 
 class Book extends Component {
     render() {
+        var icon = new String("glyphicon glyphicon-")
+        if(this.props.bixoa == 1)
+        {
+            icon = icon+"ok";
+        }
+        else
+            icon = icon +"remove"
         return (
            <tr>
-                <td>1asdfasdfasdf</td>
-                <td>2asdfasdfasdf</td>
-                <td>3asdfasdfasdf</td>
-                <td>4asdfasdfasdfasdf</td>
-                <td>5asdfasfads</td>
-                <td>6asdfasdfasfasfd</td>
+                <td>{this.props.tensach}</td>
+                <td>{this.props.tentacgia}</td>
+                <td>{this.props.tenloaisanpham}</td>
+                <td>{this.tennxb}</td>
+                <td>{this.props.gia}</td>
+                <td>{this.props.soluong}</td>
                 <td>
                     <a>
                         <span className="glyphicon glyphicon-pencil"></span>
@@ -17,7 +24,7 @@ class Book extends Component {
                 </td>
                 <td>
                     <a>
-                        <span className="glyphicon glyphicon-ok"></span>
+                        <span className={icon}></span>
                     </a>
                 </td>
         </tr>

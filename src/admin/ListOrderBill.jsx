@@ -2,9 +2,52 @@ import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
 class ListOrderBill extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            itemsListOrderBill: [{}]
+        }
+    }
+    componentDidMount(){
+        fetch(`http://localhost:3001/api/admin/ListOrderBill`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log(result);
+          this.setState({
+            itemsListOrderBill: result
+          });
+        },
+
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      );
+    }
+
     render()
     {
+        const items = this.state.itemsListOrderBill.map((value, index) => {
+            const MaDonHang = value.MaDonDatHang;
+            const MaKhachHang = value.MaTaiKhoan;
+            const MaTinhTrang = value.MaTinhTrang;
+            const TenTinhTrang = value.TenTinHTrang;
+            const NgayLap = value.NgayLap;
+            const TongTien = value.TongThanhTien;
+			return (
+                <OrderBill madonhang={MaDonHang} 
+                           makhachhang ={MaKhachHang} 
+                           matinhtrang = {MaTinhTrang}
+                           tentinhtrang = {TenTinhTrang}
+                           ngaylap = {NgayLap}
+                           tongtien = {TongTien}
+                />
+			);
+		});
         return(
+            
             <div>    
                 <Search />
                 <table className="table table-striped" id="orderList">
@@ -18,8 +61,7 @@ class ListOrderBill extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                        <OrderBill />
-                        <OrderBill />
+                        {items}
                         <tr className="hidden">
                             {/* include('templates/DonDatHang/tempChiTietDonDatHang.php'); */}
                         </tr>

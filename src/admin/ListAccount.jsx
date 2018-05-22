@@ -1,7 +1,52 @@
 import React, { Component } from 'react';
 import Account from "./Account";
 class ListAccount extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            itemsListAccount: [{}]
+        }
+    }
+    componentDidMount(){
+        fetch(`http://localhost:3001/api/admin/ListAccount`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log(result);
+          this.setState({
+            itemsListAccount: result
+          });
+        },
+
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      );
+    }
     render() {
+        const items = this.state.itemsListAccount.map((value, index) => {
+            const MaTaiKhoan = value.MaTaiKhoan
+            const TenDangNhap = value.TenDangNhap
+            const TenHienThi = value.TenHienThi
+            const DienThoai = value.DienThoai
+            const DiaChi = value.DiaChi
+            const Email = value.Email
+            const BiXoa = value.BiXoa
+            const TenLoaiTaiKhoan = value.TenLoaiTaiKhoan
+			return (
+                <Account   mataikhoan ={MaTaiKhoan} 
+                           tendangnhap ={TenDangNhap} 
+                           tenloaitaikhoan = {TenLoaiTaiKhoan}
+                           tenhienthi = {TenHienThi}
+                           dienthoai = {DienThoai}
+                           diachi = {DiaChi}
+                           email = {Email}
+                           bixoa = {BiXoa}
+                />
+			);
+		});
         return (
             <div>
                 <form  className="navbar-form pull-right" id="searchBox">
@@ -23,7 +68,7 @@ class ListAccount extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <Account />
+                        {items}
                     </tbody>
                 </table>
             </div>

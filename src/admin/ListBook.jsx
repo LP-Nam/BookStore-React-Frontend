@@ -2,8 +2,52 @@ import React from "react";
 import Book from "./Book";
 import Search from "./SearchBook";
 class ListBook extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            itemsListBook: [{}]
+        }
+    }
+    componentDidMount(){
+        fetch(`http://localhost:3001/api/admin/ListBook`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log(result);
+          this.setState({
+            itemsListBook: result
+          });
+        },
+
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      );
+    }
     render()
     {
+        const items = this.state.itemsListBook.map((value, index) => {
+            const TenSach = value.TenSanPham
+            const TenTacGia = value.TenTacGia
+            const TenLoaiSanPham = value.TenLoaiSanPham
+            const TenNXB = value.TenHangSanXuat
+            const Gia = value.GiaSanPham
+            const BiXoa = value.BiXoa
+            const SoLuong = value.SoLuongTon
+			return (
+                <Book 
+                    tensach={TenSach}
+                    tentacgia = {TenTacGia}
+                    tenloaisanpham = {TenLoaiSanPham}
+                    tennxb = {TenNXB}
+                    gia = {Gia}
+                    soluong = {SoLuong}
+                    bixoa = {BiXoa}
+                />
+			);
+		});
         return(
             <div>
                 <Search />
@@ -19,8 +63,7 @@ class ListBook extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                        <Book/>
-                        <Book/>
+                        {items}
                     </tbody>
                 </table>
             </div>
