@@ -7,71 +7,18 @@ import ListType from "./ListType";
 import Footer from "./Footer";
 import Content from "./Content";
 import MainRouter from "./MainRouter";
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import "../mystyle.css";
+
 class Main extends Component {
 
 	constructor(props) {
 		super(props);
 
 		this.render = this.render.bind(this);
-
-		// this.state = {
-		// 	newItems: [{}],
-		// 	mostPopularItems: [{}]
-		// }
 	}
 
-	// componentDidMount() {
-	// 	fetch("http://localhost:3001/api/product/new")
-	// 	//fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
-	//     .then(res => res.json())
-	//     .then(
-	//       (result) => {
-	//       	console.log(result);
-	//         this.setState({
-	//           newItems: result
-	//         });
-	//       },
-
-	//       (error) => {
-	//         this.setState({
-	//           error
-	//         });
-	//       }
-	//     );
-	// 		fetch("http://localhost:3001/api/product/best-seller")
-	// 		//fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
-	//     .then(res => res.json())
-	//     .then(
-	//       (result) => {
-	//       	console.log(result);
-	//         this.setState({
-	//           mostPopularItems: result
-	//         });
-	//       },
-
-	//       (error) => {
-	//         this.setState({
-	//           error
-	//         });
-	//       }
-	//     );
-	// 	}
-
 	render() {
-
-		// const cards = this.state.newItems.map((sach, index) => {
-		// 	const ten = sach.TenSanPham;
-		// 	const url = sach.HinhURL;
-		// 	const ma = sach.MaSanPham;
-		// 	const tacGia = sach.TenTacGia;
-		// 	const gia = sach.GiaSanPham;
-
-		// 	return (
-		// 		<Card tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"../src/images/"+url}/>
-		// 	);
-		// });
-
 		return (
 			<div>
 				<TopBar />
@@ -84,8 +31,6 @@ class Main extends Component {
 							<ListType />
 						</div>
 						<div className="w72p pull-right">
-							{/* <Content newItems={this.state.newItems} mostPopularItems={this.state.mostPopularItems} /> */}
-							{/* <Content/> */}
 							<MainRouter />
 						</div>
 					</div>

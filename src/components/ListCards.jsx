@@ -1,5 +1,7 @@
 import React from"react";
 import Card from "./Card.jsx";
+import "../mystyle.css";
+
 class ListCards extends React.Component{
 
     render()

@@ -5,9 +5,9 @@ import ListBook from "./ListBook";
 import ListBookType from "./ListBookType";
 import ListPublisher from "./ListPublisher";
 import ListAccount from "./ListAccount"
-const MainRouter = () =>(
+const MainRouterAdmin = () =>(
     <Switch>
-        <Route exact path='/' component={Content}/>
+        <Route exact path='/admin' component={Content}/>
         <Route path='/ListBook' component={ListBook}/>
         <Route path='/ListBookType' component={ListBookType}/>
         <Route path='/ListPublisher' component={ListPublisher}/>
@@ -15,4 +15,4 @@ const MainRouter = () =>(
     </Switch>
 );
 
-export default MainRouter;
+export default MainRouterAdmin;
