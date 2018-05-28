@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ListGroupItem from "./ListGroupItem";
+import "../mystyle.css";
+
 class ListType extends React.Component {
 
     constructor(props) {

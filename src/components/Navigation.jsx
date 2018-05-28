@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import "../mystyle.css";
+
 class Navigation extends React.Component{
     render()
     {

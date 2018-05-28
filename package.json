@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "dateformat": "^3.0.3",
+=======
+    "jwt-decode": "^2.2.0",
+>>>>>>> 47ea15a5f325c3d15d2453887323a4b16900fb6e
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.2",
