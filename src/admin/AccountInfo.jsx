@@ -5,8 +5,8 @@ class AccountInfo extends React.Component{
         return(
             <ul className="nav navbar-nav pull-right">
                 <li><a href="#">Tên tài khoản</a></li>
-                <li><a href="../"> Trang khách hàng</a></li>
-                <li><a href="index.php?a=50"> Đăng xuất</a></li>
+                <li><a href="#"> Trang khách hàng</a></li>
+                <li><a href="#"> Đăng xuất</a></li>
             </ul>
         )
     }

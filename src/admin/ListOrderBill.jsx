@@ -33,11 +33,11 @@ class ListOrderBill extends React.Component{
             const MaDonHang = value.MaDonDatHang;
             const MaKhachHang = value.MaTaiKhoan;
             const MaTinhTrang = value.MaTinhTrang;
-            const TenTinhTrang = value.TenTinHTrang;
+            const TenTinhTrang = value.TenTinhTrang;
             const NgayLap = value.NgayLap;
             const TongTien = value.TongThanhTien;
 			return (
-                <OrderBill madonhang={MaDonHang} 
+                <OrderBill id={MaDonHang} 
                            makhachhang ={MaKhachHang} 
                            matinhtrang = {MaTinhTrang}
                            tentinhtrang = {TenTinhTrang}
@@ -62,6 +62,7 @@ class ListOrderBill extends React.Component{
                     </thead>
                     <tbody>
                         {items}
+                        {/*chi tiết hóa đơn*/}
                         <tr className="hidden">
                             {/* include('templates/DonDatHang/tempChiTietDonDatHang.php'); */}
                         </tr>

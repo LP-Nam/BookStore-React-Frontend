@@ -1,8 +1,7 @@
 import React from "react";
 import TopBar from "./TopBar";
 import Navigation from "./Navigation";
-import Content from "./Content";
-import MainRouter from "./MainRouter"
+import MainRouter from "./MainRouter";
 class Main extends React.Component{
     render(){
         return(
@@ -11,9 +10,7 @@ class Main extends React.Component{
                 <Navigation />
                 <div className="container">
                     <div className="w100p" id="page"> 
-                        <div> 
-                            <MainRouter />
-                        </div> 
+                        <MainRouter />
                     </div> 
                 </div>
             </div>

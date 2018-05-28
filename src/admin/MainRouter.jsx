@@ -1,17 +1,20 @@
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import Content from "./Content";
+import ListOrderBill from "./ListOrderBill";
 import React from "react";
 import ListBook from "./ListBook";
 import ListBookType from "./ListBookType";
 import ListPublisher from "./ListPublisher";
-import ListAccount from "./ListAccount"
+import ListAccount from "./ListAccount";
+import UpdateOrderBill from "./UpdateOrderBill";
 const MainRouter = () =>(
     <Switch>
-        <Route exact path='/' component={Content}/>
-        <Route path='/ListBook' component={ListBook}/>
-        <Route path='/ListBookType' component={ListBookType}/>
-        <Route path='/ListPublisher' component={ListPublisher}/>
-        <Route path='/ListAccount' component={ListAccount}/>
+        <Route exact path='/admin' component={ListOrderBill}/>
+        <Route path='/admin/ListBook' component={ListBook}/>
+        <Route path='/admin/ListBookType' component={ListBookType}/>
+        <Route path='/admin/ListPublisher' component={ListPublisher}/>
+        <Route path='/admin/ListAccount' component={ListAccount}/>
+
+        <Route path='/admin/UpdateOrderBill/:id' component={UpdateOrderBill}/>
     </Switch>
 );
 

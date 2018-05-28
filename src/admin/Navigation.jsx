@@ -6,11 +6,11 @@ class Navigation extends React.Component{
             <div className="container" id="navigation">
                 <div className="navbar navbar-inverse">
                     <ul className="nav navbar-nav" id="menu">
-                        <li><Link to="/">Đơn đặt hàng</Link></li>
-                        <li><Link to="/ListBook">Sách</Link></li>
-                        <li><Link to="/ListBookType">Thể loại sách</Link></li>
-                        <li><Link to="/ListPublisher">Nhà xuất bản</Link></li>
-                        <li><Link to="/ListAccount">Quản lý tài khoản</Link></li>		
+                        <li><Link to="/admin">Đơn đặt hàng</Link></li>
+                        <li><Link to="/admin/ListBook">Sách</Link></li>
+                        <li><Link to="/admin/ListBookType">Thể loại sách</Link></li>
+                        <li><Link to="/admin/ListPublisher">Nhà xuất bản</Link></li>
+                        <li><Link to="/admin/ListAccount">Quản lý tài khoản</Link></li>		
                     </ul>
                 </div>
             </div>
