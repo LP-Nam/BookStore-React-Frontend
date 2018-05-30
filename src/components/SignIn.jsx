@@ -31,12 +31,14 @@ class SignIn extends React.Component {
                 (result) => {
                     console.log(result);
                     // save  localStoraged
-                    localStorage.setItem('token', JSON.stringify(result.token));
+                    if (result.message == 'ok') {
+                        localStorage.setItem('token', JSON.stringify(result.token));
+                    }
                     // direct /account
                     this.setState({
                         message: result.message,
                         token: result.token,
-                        isLogined: true
+                        isLogined: result.message == 'ok' ? true : false,
                     });
                 },
 
@@ -50,9 +52,10 @@ class SignIn extends React.Component {
     }
 
     render() {
-        if ( this.state.isLogined ) {
+        if (this.state.isLogined) {
             return <Redirect to="/" />
         }
+        let msg = this.state.message!='ok'?this.state.message:'';
         return (
             <div className="container" id="topBar">
                 <div className="navbar navbar-inverse">

@@ -6,21 +6,10 @@ import InfoAccount from "./InfoAccount";
 import { Redirect } from 'react-router-dom';
 class TopBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            // TenHienThi: localStorage.getItem('TenHienThi'),
-            // token: localStorage.getItem('token'),
-        }
-    }
-
     render() {
         if (localStorage.getItem('token')) {
             let token = localStorage.getItem('token');
-            if (token) {
-                return <InfoAccount />
-            }
+            return <InfoAccount />
         }
         return (
             <SignIn />
