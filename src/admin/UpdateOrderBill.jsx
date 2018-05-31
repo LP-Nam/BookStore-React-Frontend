@@ -7,12 +7,14 @@ class UpdateOrderBill extends Component {
         this.state = {
           items: [{}],
           status: [{}],
-          redirect: false
+          redirect: false,
+          loadSuccess: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleDateChange = this.handleDateChange.bind(this)
         this.handleCustomerIDChange = this.handleCustomerIDChange.bind(this)
         this.handleTotalMoneyChange = this.handleTotalMoneyChange.bind(this)
+        this.handleStatusChange = this.handleStatusChange.bind(this)
       }
     fetchAPI = (id) => {
         fetch(`http://localhost:3001/api/admin/UpdateOrderBill/${id}`)                                                                                                              
@@ -21,7 +23,8 @@ class UpdateOrderBill extends Component {
             (result) => {
               console.log(result);
               this.setState({
-                items: result
+                items: result,
+                loadSuccess: true
               });
             },
     
@@ -39,7 +42,8 @@ class UpdateOrderBill extends Component {
           (result) => {
             console.log(result);
             this.setState({
-              status: result
+              status: result,
+              loadSuccess: true
             });
           },
   
@@ -75,6 +79,13 @@ class UpdateOrderBill extends Component {
                 items: temp
             })
     }
+    handleStatusChange =(event)=>{
+        const temp = this.state.items.slice();
+        temp[0].MaTinhTrang = event.target.value;
+        this.setState({
+            items: temp
+        })
+    }
       handleSubmit=(event)=> {
     
         fetch(`http://localhost:3001/api/admin/UpdateOrderBill/${this.state.items[0].MaDonDatHang}`, {
@@ -95,6 +106,7 @@ class UpdateOrderBill extends Component {
                   this.setState({
                       redirect: true
                   })
+                  
                },
                (error)=>{
                     console.log(error);
@@ -125,26 +137,28 @@ class UpdateOrderBill extends Component {
             const id = value.MaTinhTrang;
             const tentinhtrang = value.TenTinhTrang;
 			return (
-                <option key ={id} value={id}  selected={(id === this.state.items[0].MaTinhTrang)?'true' : ""}>
+                <option  value={id}    key={"key_"+id} >
                     {tentinhtrang}
                 </option>
 			);
-		});
+        });
+        
         return (
             <div>
                 <div className="panel">
                     <h2 className="page-header text-center">Sửa đơn đặt hàng #{this.state.items[0].MaDonDatHang}</h2>
                     <div className="panel-body">
+
                         <div className="frmEdit w40p center-block">
                             Ngày tạo: 
                             <input  type="datetime-local" onChange={this.handleDateChange} ref="NgayLap" className="form-control" name="NgayLap" value={this.formatdate()}></input>
                             Mã khách hàng: 
-                            <input type="text" className="form-control" onChange={this.handleCustomerIDChange} ref="MaKhachHang" placeholder="Mã KH" name="MaKhachHang" value={this.state.items[0].MaTaiKhoan}></input>
+                            <input type="text" className="form-control" onChange={this.handleCustomerIDChange} ref="MaKhachHang" value={this.state.loadSuccess?this.state.items[0].MaTaiKhoan:""}></input>
                             Tổng tiền: 
-                            <input type="text" className="form-control" onChange={this.handleTotalMoneyChange} ref="TongThanhTien" placeholder="Tổng tiền" name="TongThanhTien" value={this.state.items[0].TongThanhTien}></input>
+                            <input type="text" className="form-control" onChange={this.handleTotalMoneyChange} ref="TongThanhTien" placeholder="Tổng tiền" name="TongThanhTien" value={this.state.loadSuccess?this.state.items[0].TongThanhTien:""}></input>
                             Trạng thái: 
-                            <select className="form-control" ref="TinhTrang" name="TrangThai" id="cbbStatus">
-                                <option value="" className="hidden">-- Chọn trạng thái --</option>  
+                            <select className="form-control" ref="TinhTrang" onChange={this.handleStatusChange} value={this.state.loadSuccess?this.state.items[0].MaTinhTrang:""} >
+                                <option  value="" className="hidden">-- Chọn trạng thái --</option>  
                                  {options}
                             </select>
                             <br></br>

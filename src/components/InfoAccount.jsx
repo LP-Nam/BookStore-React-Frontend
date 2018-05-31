@@ -1,6 +1,5 @@
 import React from "react";
 import jwtDecode from 'jwt-decode';
-import "../mystyle.css";
 import { Link, Redirect } from 'react-router-dom';
 
 class InfoAccount extends React.Component {

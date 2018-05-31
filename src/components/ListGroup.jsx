@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ListGroupItem from "./ListGroupItem.jsx";
-import "../mystyle.css";
 
 class ListGroup extends Component {
 
@@ -40,7 +39,7 @@ class ListGroup extends Component {
 			const id = value.MaHangSanXuat;
 
 			return (
-				<ListGroupItem id={id} tenTacGia={ten} url='/publisher'/>
+				<ListGroupItem key={"key_"+id} id={id} tenTacGia={ten} url='/publisher'/>
 			);
 		});
 		return (

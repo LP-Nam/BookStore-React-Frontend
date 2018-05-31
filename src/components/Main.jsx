@@ -8,7 +8,6 @@ import Footer from "./Footer";
 import Content from "./Content";
 import MainRouter from "./MainRouter";
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import "../mystyle.css";
 
 class Main extends Component {
 

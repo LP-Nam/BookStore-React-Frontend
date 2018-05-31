@@ -7,8 +7,6 @@ import BookDetail from "./BookDetail";
 import AccountRegister from "./AccountRegister";
 import MainAdmin from '../admin/Main';
 
-import "../mystyle.css";
-
 const MainRouter = () =>(
     <Switch>
         <Route exact path='/' component={Content}/>

@@ -38,6 +38,7 @@ class ListOrderBill extends React.Component{
             const TongTien = value.TongThanhTien;
 			return (
                 <OrderBill id={MaDonHang} 
+                           key={"key_"+MaDonHang}
                            makhachhang ={MaKhachHang} 
                            matinhtrang = {MaTinhTrang}
                            tentinhtrang = {TenTinhTrang}
