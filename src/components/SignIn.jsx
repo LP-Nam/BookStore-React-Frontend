@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
-import "../mystyle.css";
 
 class SignIn extends React.Component {
 

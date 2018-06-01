@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ListGroupItem from "./ListGroupItem";
-import "../mystyle.css";
 
 class ListType extends React.Component {
 
@@ -41,16 +40,14 @@ class ListType extends React.Component {
             const id = value.MaLoaiSanPham;
 
             return (
-                <ListGroupItem id={id} tenTacGia={ten} url='/category'/>
+                <ListGroupItem key={"key_"+id} id={id} tenTacGia={ten} url='/category'/>
             );
         });
         return (
             <div className="panel panel-default" id="cateMdl">
                 <div className="panel-heading">CÁC THỂ LOẠI</div>
                 <ul className="list-group">
-                    <li>
                         {types}
-                    </li>
                 </ul>
             </div>
         )

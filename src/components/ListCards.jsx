@@ -1,6 +1,5 @@
 import React from"react";
 import Card from "./Card.jsx";
-import "../mystyle.css";
 
 class ListCards extends React.Component{
 
@@ -14,13 +13,13 @@ class ListCards extends React.Component{
 			const gia = sach.GiaSanPham;
 
 			return (
-				<Card tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={process.env.PUBLIC_URL + "/images/Product/"+url}/>
+				<Card key={"key_"+ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={process.env.PUBLIC_URL + "/images/Product/"+url}/>
 			);
 		});
 
         return(
-            <div class="clearfix">
-                <h2 class="page-header">{this.props.nameHeader}</h2>
+            <div className="clearfix">
+                <h2 className="page-header">{this.props.nameHeader}</h2>
                 {cards}
             </div>
         )
