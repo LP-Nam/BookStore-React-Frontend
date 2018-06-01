@@ -4,6 +4,9 @@ import "../mystyle.css";
 import { Link, Redirect } from 'react-router-dom';
 
 class InfoAccount extends React.Component {
+    DangXuatHandle=()=>{
+        localStorage.removeItem('token');
+    }    
 
     render() {
         let token = localStorage.getItem('token');
@@ -17,7 +20,7 @@ class InfoAccount extends React.Component {
                     <ul className="nav navbar-nav pull-right">
                         <li><a href="#">Hello, {TenHienThi}</a></li>
                         {tmp}
-                        <li><a href="#"> Đăng xuất</a></li>
+                        <li onClick={this.DangXuatHandle}><a href="#"> Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
