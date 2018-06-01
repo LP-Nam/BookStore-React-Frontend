@@ -7,7 +7,7 @@ class SignIn extends React.Component {
         super(props);
 
         this.state = {
-            message: '',
+            message: 'ok',
             token: '',
             isLogined: false
         }
@@ -47,14 +47,15 @@ class SignIn extends React.Component {
                     });
                 }
             );
-        //alert(this.state.token.jwt_payload.TenHienThi);
     }
 
     render() {
         if (this.state.isLogined) {
             return <Redirect to="/" />
         }
-        let msg = this.state.message!='ok'?this.state.message:'';
+        let msg = this.state.message != 'ok' ? (<div class="alert alert-danger">
+            <strong>Đăng nhập không thành công!</strong> Sai <strong>Tên Đăng Nhập</strong> hoặc <strong>Mật Khẩu</strong>
+      </div>) : null;
         return (
             <div className="container" id="topBar">
                 <div className="navbar navbar-inverse">
@@ -68,6 +69,7 @@ class SignIn extends React.Component {
                         </li>
                         <li><Link to="/AccountRegister"><button className="btn">Đăng Kí</button></Link></li>
                     </ul>
+                    {msg}
                 </div>
             </div>
         );

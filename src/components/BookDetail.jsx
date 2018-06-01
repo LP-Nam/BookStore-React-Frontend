@@ -1,5 +1,6 @@
 import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
+import jwtDecode from "jwt-decode";
 
 class BookDetail extends React.Component {
     constructor(props) {
@@ -37,6 +38,20 @@ class BookDetail extends React.Component {
     }
 
     render() {
+        let gioHang = null;
+        let token = localStorage.getItem('token');
+        if (token) {
+            let user = jwtDecode(token);
+            if (user) {
+                gioHang = (<li class="list-group-item">
+                    <form action="" method="post">
+                        <button type="Submit" class="btn btn-danger" onclick="">Đặt vào giỏ hàng</button>
+                        Số lượng: <input type="text" value="1" class="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
+                    </form>
+                </li>);
+            }
+        }
+
         return (
             <React.Fragment>
                 <div class="clearfix" id="productDetail">
@@ -52,12 +67,7 @@ class BookDetail extends React.Component {
                             <li class="list-group-item"><b>Giới thiệu: </b>{this.state.items[0].MoTa}</li>
                             <li class="list-group-item"><b>Số lượng còn:</b>{this.state.items[0].SoLuongTon} quyển</li>
                             <li class="list-group-item"><h4>Giá: <span class="price">{this.state.items[0].GiaSanPham} VNĐ</span></h4></li>
-                            {/* <li class="list-group-item">
-                        <form action="" method="post">
-                                <button type="Submit" class="btn btn-danger" onclick="">Đặt vào giỏ hàng</button>
-                                Số lượng: <input type="text" value="1" class="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />>
-                        </form>
-                        </li> */}
+                            {gioHang}
                         </ul>
                     </div>
                 </div>

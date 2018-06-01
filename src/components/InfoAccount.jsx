@@ -19,7 +19,7 @@ class InfoAccount extends React.Component {
                     <ul className="nav navbar-nav pull-right">
                         <li><a href="#">Hello, {TenHienThi}</a></li>
                         {tmp}
-                        <li onClick={this.DangXuatHandle}><a href="#"> Đăng xuất</a></li>
+                        <li onClick={this.DangXuatHandle}><a href='#'> Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
