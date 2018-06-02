@@ -45,7 +45,7 @@ class BookDetail extends React.Component {
             if (user) {
                 gioHang = (<li class="list-group-item">
                     <form action="" method="post">
-                        <button type="Submit" class="btn btn-danger" onclick="">Đặt vào giỏ hàng</button>
+                        <button type="Submit" class="btn btn-danger" onClick="">Đặt vào giỏ hàng</button>
                         Số lượng: <input type="text" value="1" class="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
                     </form>
                 </li>);

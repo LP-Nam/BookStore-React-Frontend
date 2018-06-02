@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import React from "react";
+import { Link, Redirect } from 'react-router-dom';
 
 class SignIn extends React.Component {
 
@@ -14,6 +14,7 @@ class SignIn extends React.Component {
     }
 
     onClickHandle = () => {
+        this.setState({message:'ok'});
         fetch("http://localhost:3001/login", {
             method: 'POST',
             headers: {
@@ -28,10 +29,9 @@ class SignIn extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
                     // save  localStoraged
                     if (result.message == 'ok') {
-                        localStorage.setItem('token', JSON.stringify(result.token));
+                        localStorage.setItem('token', result.token);
                     }
                     // direct /account
                     this.setState({

@@ -9,7 +9,12 @@ class ListBook extends React.Component{
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListBook`)
+        fetch(`http://localhost:3001/api/admin/ListBook`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
       .then(res => res.json())
       .then(
         (result) => {

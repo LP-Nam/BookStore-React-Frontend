@@ -8,7 +8,12 @@ class ListPublisher extends Component {
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListPublisher`)
+        fetch(`http://localhost:3001/api/admin/ListPublisher`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
       .then(res => res.json())
       .then(
         (result) => {

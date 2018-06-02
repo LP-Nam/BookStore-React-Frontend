@@ -1,34 +1,37 @@
 import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
-class ListOrderBill extends React.Component{
-    constructor(props){
+class ListOrderBill extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             itemsListOrderBill: [{}]
         }
     }
-    componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListOrderBill`)
-      .then(res => res.json())
-      .then(
-        (result) => {
-            console.log(result);
-          this.setState({
-            itemsListOrderBill: result
-          });
-        },
+    componentDidMount() {
+        fetch('http://localhost:3001/api/admin/ListOrderBill', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        itemsListOrderBill: result
+                    });
+                },
 
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      );
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            );
     }
 
-    render()
-    {
+    render() {
         const items = this.state.itemsListOrderBill.map((value, index) => {
             const MaDonHang = value.MaDonDatHang;
             const MaKhachHang = value.MaTaiKhoan;
@@ -36,20 +39,20 @@ class ListOrderBill extends React.Component{
             const TenTinhTrang = value.TenTinhTrang;
             const NgayLap = value.NgayLap;
             const TongTien = value.TongThanhTien;
-			return (
-                <OrderBill id={MaDonHang} 
-                           key={"key_"+MaDonHang}
-                           makhachhang ={MaKhachHang} 
-                           matinhtrang = {MaTinhTrang}
-                           tentinhtrang = {TenTinhTrang}
-                           ngaylap = {NgayLap}
-                           tongtien = {TongTien}
+            return (
+                <OrderBill id={MaDonHang}
+                    key={"key_" + MaDonHang}
+                    makhachhang={MaKhachHang}
+                    matinhtrang={MaTinhTrang}
+                    tentinhtrang={TenTinhTrang}
+                    ngaylap={NgayLap}
+                    tongtien={TongTien}
                 />
-			);
-		});
-        return(
-            
-            <div>    
+            );
+        });
+        return (
+
+            <div>
                 <Search />
                 <table className="table table-striped" id="orderList">
                     <thead>

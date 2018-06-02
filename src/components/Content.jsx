@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import AccountRegister from "./AccountRegister";
 import {Route} from 'react-router-dom'
 import ListCards from "./ListCards";

@@ -8,7 +8,12 @@ class ListAccount extends Component {
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListAccount`)
+        fetch(`http://localhost:3001/api/admin/ListAccount`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
       .then(res => res.json())
       .then(
         (result) => {

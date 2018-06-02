@@ -8,7 +8,12 @@ class ListBookType extends Component {
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListBookType`)
+        fetch(`http://localhost:3001/api/admin/ListBookType`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
       .then(res => res.json())
       .then(
         (result) => {

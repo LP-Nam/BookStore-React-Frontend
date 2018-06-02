@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import Content from "./Content";
 import React from "react";
 import BookByCategory from "./BookByCategory";
 import BookByPublisher from "./BookByPublisher";
 import BookDetail from "./BookDetail";
 import AccountRegister from "./AccountRegister";
-import MainAdmin from '../admin/Main';
 
 const MainRouter = () =>(
     <Switch>

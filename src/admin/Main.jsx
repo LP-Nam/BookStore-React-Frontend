@@ -2,7 +2,7 @@ import React from "react";
 import TopBar from "./TopBar";
 import Navigation from "./Navigation";
 import MainRouterAdmin from "./MainRouterAdmin";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
 
 class Main extends React.Component {

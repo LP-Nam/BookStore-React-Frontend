@@ -9,7 +9,7 @@ class App extends React.Component {
     render() {
         return (
             <Switch>
-                <Route  path='/admin' component={MainAdmin} />
+                <Route path='/admin' component={MainAdmin} />
                 <Route path='/' component={Main} />
             </Switch>
         );
