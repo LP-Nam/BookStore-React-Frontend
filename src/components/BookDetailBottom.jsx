@@ -41,7 +41,7 @@ class BookDetailBottom extends React.Component {
 
     render() {
         return (
-            <div class="clearfix">
+            <div className="clearfix">
                 <ListCards items={this.state.items} nameHeader="Sách Cùng Thể Loại"/>
             </div>
         );

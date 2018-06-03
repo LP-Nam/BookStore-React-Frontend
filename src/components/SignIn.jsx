@@ -53,7 +53,7 @@ class SignIn extends React.Component {
         if (this.state.isLogined) {
             return <Redirect to="/" />
         }
-        let msg = this.state.message != 'ok' ? (<div class="alert alert-danger">
+        let msg = this.state.message != 'ok' ? (<div className="alert alert-danger">
             <strong>Đăng nhập không thành công!</strong> Sai <strong>Tên Đăng Nhập</strong> hoặc <strong>Mật Khẩu</strong>
       </div>) : null;
         return (

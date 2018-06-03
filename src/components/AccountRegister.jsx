@@ -9,7 +9,8 @@ class AccountRegister extends React.Component {
             usernameValid: false,
             passwordValid: false,
             emailValid: false,
-            formValid: false,
+            formValid: true,
+            checkUsername: 0,
             TenDangNhap: '',
             MatKhau: '',
             NhapLaiMatKhau: '',
@@ -20,26 +21,27 @@ class AccountRegister extends React.Component {
         };
     }
 
-    TenDangNhaponChangeHandle = (e) => {
-        this.setState({
-            TenDangNhap: e.target.value,
-        });
-        this.KiemTraUsernameTonTai();
-        if(this.state.checkUsername==1){
-            this.setState({formValid:false});
-            alert('Tên đăng nhập đã tồn tại');
-        }
-    }
+    // TenDangNhaponChangeHandle = (e) => {
+    //     this.setState({
+    //         TenDangNhap: e.target.value,
+    //     });
+    //     this.KiemTraUsernameTonTai();
+    //     if(this.state.checkUsername != 0){
+    //         this.setState({formValid:false});
+    //         alert('Tên đăng nhập đã tồn tại');
+    //     }
+    // }
 
     KiemTraUsernameTonTai = () => {
-        fetch(`http://localhost:3001/api/checkUsername/${this.refs.txtTenDangNhap.value}`)
+        fetch(`http://localhost:3001/api/checkUsername/${this.state.TenDangNhap}`)
             .then(res => res.json())
             .then(
                 (result) => {
-                    let tmp = result[0].sl;
+                   var tmp = result[0].sl;
+                   console.log(tmp)
                     this.setState({
-                        checkUsername: tmp,
-                    });
+                        checkUsername:tmp
+                    })
                 },
 
                 (error) => {
@@ -51,32 +53,86 @@ class AccountRegister extends React.Component {
     }
 
     KiemTraThongTin = () => {
+        let check = 1
         if (this.state.TenDangNhap == "") {
-            this.setState({formValid:false});
-            alert("Tên đăng nhập không được để trống");
+            check = 0
+            this.setState({
+                formValid:false,
+                usernameError: true
+            })
         }
-        if (this.state.MatKhau.length < 8) {
-            this.setState({formValid:false});
-            alert("Độ dài mật khẩu phải 8 kí tự trở lên");
+        else{
+            this.setState({
+                usernameError: false
+            })
+        }
+        this.KiemTraUsernameTonTai()
+        if(this.state.checkUsername != 0){      
+            check = 0
+            this.setState({
+                formValid:false,
+                usernameExist:true
+            })
+        }
+        else{
+            this.setState({
+                usernameExist:false
+            })
+        }
+         if (this.state.MatKhau.length < 8) {
+             check = 0
+             this.setState({
+                formValid:false,
+                passError: true
+            })
+        }
+        else{
+            this.setState({
+                passError: false
+            })
         }
         if (this.state.MatKhau != this.state.NhapLaiMatKhau) {
-            this.setState({formValid:false});
-            alert("Nhập lại mật khẩu không khớp");
+            check = 0
+            this.setState({
+                formValid:false,
+                rpassError:true
+            })
+        }
+        else{
+            this.setState({
+                rpassError:false
+            })
         }
         if (this.state.HoTen == "") {
-            this.setState({formValid:false});
-            alert("Họ tên không được để trống");
+            check = 0
+            this.setState({
+                formValid:false,
+                nameError: true
+            })
+        }
+        else{
+            this.setState({
+                nameError: false
+            })
         }
 
         var emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         if (this.state.Email.length == 0 || !emailPattern.test(this.state.Email)) {
-            this.setState({formValid:false});
-            alert("Email không hợp lệ");
+            check = 0
+            this.setState({
+                formValid:false,
+                emailError:true
+            })
         }
-        this.setState({formValid:true});
+        else{
+            this.setState({
+                emailError:false
+            })
+        }
+        return check
     }
 
-    onClickHandle = () => {
+    onClickHandle = (e) => {
         if (this.KiemTraThongTin()) {
             fetch("http://localhost:3001/api/register", {
                 method: 'POST',
@@ -96,9 +152,8 @@ class AccountRegister extends React.Component {
                 .then(res => res.json())
                 .then(
                     (result) => {
-                        console.log(result);
                         this.setState({
-                            items: result
+                            Result: result.affectedRows
                         });
                     },
 
@@ -114,25 +169,50 @@ class AccountRegister extends React.Component {
     handleUserInput=(e)=>{
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({[name]: value}, this.KiemTraThongTin);
+        this.setState({[name]: value});
     }
 
     render() {
-        return (
-            <div class="w100p well">
-                <form class="w60p center-block">
-                    <h2 class="page-header text-center">Đăng ký tài khoản</h2>
-                    <p>Tên đăng nhập: <input class="form-control" type="text" id="txtTenDangNhap" name="TenDangNhap" value={this.state.TenDangNhap} onChange={this.handleUserInput} /></p>
-                    <p>Mật khẩu: <input class="form-control" type="password" id="txtMatKhau" name="MatKhau" value={this.state.MatKhau} onChange={this.handleUserInput} ></input></p>
-                    <p>Nhập lại mật khẩu: <input class="form-control" type="password" id="NhapLaiMatKhau" value={this.state.NhapLaiMatKhau} onChange={this.handleUserInput} ></input></p>
-                    <p>Họ tên: <input class="form-control" type="text" id="txtHoTen" name="HoTen" value={this.state.HoTen} onChange={this.handleUserInput} ></input></p>
-                    <p>Điện thoại: <input class="form-control" type="text" id="txtDienThoai" name="DienThoai" value={this.state.DienThoai} onChange={this.handleUserInput} ></input></p>
-                    <p>Địa chỉ: <input class="form-control" type="text" id="txtDiaChi" name="DiaChi" value={this.state.DiaChi} onChange={this.handleUserInput} ></input></p>
-                    <p>Email: <input class="form-control" type="email" id="txtEmail" name="Email" placeholder="example@gmail.com" value={this.state.Email} onChange={this.handleUserInput} ></input></p>
-                    <p><button type='button' class="btn btn-primary center-block" onClick={this.onClickHandle}>Đăng ký</button></p>
-                </form>
-            </div>
-        )
+        let usernameMS = this.state.usernameError?(<li>Tên đăng nhập không được để trống</li>):null
+        let usernamecheckMS = this.state.usernameExist?(<li>Tên đăng nhập đã tổn tại</li>):null
+        let passMS = this.state.passError?(<li>Độ dài mật khẩu phải 8 kí tự trở lên</li>):null
+        let rpassMS = this.state.rpassError?(<li>Nhập lại mật khẩu không đúng</li>):null
+        let nameMS = this.state.nameError?(<li>Họ tên không được để trống</li>):null
+        let emailMS = this.state.emailError?(<li>Email không đúng</li>):null
+        let errorAlert=this.state.formValid == false?(<div className="alert alert-danger">
+                    <ul>
+                        {usernameMS}
+                        {usernamecheckMS}
+                        {passMS}
+                        {rpassMS}
+                        {nameMS}
+                        {emailMS}
+                    </ul>
+                </div>):null
+        if(this.state.Result == 1)
+        {
+            return(<div className='alert alert-success'>Đăng kí tài khoản thành công</div>)
+        }
+        else{
+
+            return (
+                
+                <div className="w100p well">
+                    {errorAlert}
+                    <form className="w60p center-block">
+                        <h2 className="page-header text-center">Đăng ký tài khoản</h2>
+                        <p>Tên đăng nhập:<input className="form-control" type="text" id="txtTenDangNhap" name="TenDangNhap" value={this.state.TenDangNhap} onChange={this.handleUserInput} /></p>
+                        <p>Mật khẩu:  <input className="form-control" type="password" id="txtMatKhau" name="MatKhau" value={this.state.MatKhau} onChange={this.handleUserInput} ></input></p>
+                        <p>Nhập lại mật khẩu:  <input className="form-control" type="password" id="NhapLaiMatKhau" name="NhapLaiMatKhau" value={this.state.NhapLaiMatKhau} onChange={this.handleUserInput} ></input></p>
+                        <p>Họ tên:  <input className="form-control" type="text" id="txtHoTen" name="HoTen" value={this.state.HoTen} onChange={this.handleUserInput} ></input></p>
+                        <p>Điện thoại: <input className="form-control" type="text" id="txtDienThoai" name="DienThoai" value={this.state.DienThoai} onChange={this.handleUserInput} ></input></p>
+                        <p>Địa chỉ: <input className="form-control" type="text" id="txtDiaChi" name="DiaChi" value={this.state.DiaChi} onChange={this.handleUserInput} ></input></p>
+                        <p>Email: <input className="form-control" type="email" id="txtEmail" name="Email" placeholder="example@gmail.com" value={this.state.Email} onChange={this.handleUserInput} ></input></p>
+                        <p><button type='button' className="btn btn-primary center-block" onClick={this.onClickHandle}>Đăng ký</button></p>
+                    </form>
+                </div>
+            )
+        }
     }
 }
 export default AccountRegister;
