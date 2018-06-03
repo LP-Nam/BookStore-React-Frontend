@@ -12,55 +12,97 @@ class Content extends React.Component{
 
     this.state = {
       newItems: [{}],
-      mostPopularItems: [{}]
+      mostPopularItems: [{}],
+      numberOfMostPopularPages: 20,
+      numberOfNewPages: 10,
+      currentNewPageIndex: 1,
+      currentMostPopularPageIndex: 11
     }
   }
+
+  // hướng dẫn sửa dụng  ;))     
+  // thêm code fetch lại newItems và mostPopularItems vào 2 methods ở dưới, thêm code set lại <numberOf...Pages> và <current...PageIndex> ở componenDidMount
+
+  // mostPopularNextClick() {
+  //   // gọi api đổi lại mostPopularItems theo index currentMostPopularPageIndex + 1
+  //   alert("mostPopularNextClick")
+  //   // đổi lại phần paging của ListCards MostPopular
+  //   this.setState({currentMostPopularPageIndex: this.state.currentMostPopularPageIndex + 1});
+  // }
     
-    componentDidMount() {
-		fetch("http://localhost:3001/api/product/new")
-		//fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
-      .then(res => res.json())
-      .then(
-        (result) => {
-        	console.log(result);
-          this.setState({
-            newItems: result
-          });
-        },
+  mostPopularIndexClick(i) {
+    alert("mostPopularIndexClick: "+ i);
+    this.setState({currentMostPopularPageIndex: i});
+  }
 
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      );
-			fetch("http://localhost:3001/api/product/best-seller")
-			//fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
-      .then(res => res.json())
-      .then(
-        (result) => {
-        	console.log(result);
-          this.setState({
-            mostPopularItems: result
-          });
-        },
+  // newNextClick() {
+  //   // gọi api đổi lại newItems theo index currentNewPageIndex + 1
+  //   alert("newNextClick");
+  //   // đổi lại phần paging của ListCards new
+  //   this.setState({currentNewPageIndex: this.state.currentNewPageIndex + 1});
+  // }
 
-        (error) => {
-          this.setState({
-            error
-          });
-        }
-      );
-  	}
+  newIndexClick(i) {
+    alert("newIndexClick: "+ i);
+    this.setState({currentNewPageIndex: i});
+  }
 
-    render()
-    {
-        return(
-            <div>  
-                <ListCards items={this.state.newItems} nameHeader='Sách Mới'/>
-                <ListCards items={this.state.mostPopularItems} nameHeader='Sách Được Mua Nhiều'/>
-            </div>
-        )
-    }
+  componentDidMount() {
+	fetch("http://localhost:3001/api/product/new")
+	//fetch("https://bookstore-express-backend.herokuapp.com/api/product/new")
+    .then(res => res.json())
+    .then(
+      (result) => {
+      	console.log(result);
+        this.setState({
+          newItems: result
+        });
+      },
+
+      (error) => {
+        this.setState({
+          error
+        });
+      }
+    );
+		fetch("http://localhost:3001/api/product/best-seller")
+		//fetch("https://bookstore-express-backend.herokuapp.com/api/product/best-seller")
+    .then(res => res.json())
+    .then(
+      (result) => {
+      	console.log(result);
+        this.setState({
+          mostPopularItems: result
+        });
+      },
+
+      (error) => {
+        this.setState({
+          error
+        });
+      }
+    );
+	}
+
+  render()
+  {
+      return(
+          <div>  
+
+              <ListCards items={this.state.newItems} 
+              numberOfPages={this.state.numberOfNewPages} 
+              indexClick={i => this.newIndexClick(i)} 
+              currentPageIndex={this.state.currentNewPageIndex} 
+              nameHeader='Sách Mới'/>
+
+              <ListCards items={this.state.mostPopularItems} 
+              numberOfPages={this.state.numberOfMostPopularPages} 
+              indexClick={i => this.mostPopularIndexClick(i)}
+              currentPageIndex={this.state.currentMostPopularPageIndex} 
+              nameHeader='Sách Được Mua Nhiều'/>
+
+          </div>
+      )
+  }
 }
 export default Content;
