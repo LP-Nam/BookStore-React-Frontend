@@ -119,7 +119,9 @@ h3 {
 .frmLogin {
     margin: auto;
 }
-
+.btn{
+    margin-left: 5px
+}
 .frmLogin input {
     display: inline-block;
     width: auto;

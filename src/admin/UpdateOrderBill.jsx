@@ -129,10 +129,6 @@ class UpdateOrderBill extends Component {
         ':' + this.pad(date.getSeconds());
       }
     render() {
-        if(this.state.redirect)
-        {
-            return <Redirect to = '/admin' />
-        }
         const options = this.state.status.map((value, index) => {
             const id = value.MaTinhTrang;
             const tentinhtrang = value.TenTinhTrang;

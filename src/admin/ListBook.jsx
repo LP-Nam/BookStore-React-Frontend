@@ -7,6 +7,30 @@ class ListBook extends React.Component{
         this.state={
             itemsListBook: [{}]
         }
+        this.handleDelete = this.handleDelete.bind(this)
+    }
+    handleDelete = (id)=>{
+        fetch(`http://localhost:3001/api/admin/UpdateBook/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                BiXoa: !this.props.bixoa,
+            })
+            })
+            .then(
+               (result)=>{
+                  this.setState({
+                      redirect: true
+                  })
+                  
+               },
+               (error)=>{
+                    console.log(error);
+               }
+            )
     }
     componentDidMount(){
         fetch(`http://localhost:3001/api/admin/ListBook`,{
@@ -41,8 +65,11 @@ class ListBook extends React.Component{
             const Gia = value.GiaSanPham
             const BiXoa = value.BiXoa
             const SoLuong = value.SoLuongTon
+            const MaSach = value.MaSanPham
 			return (
                 <Book 
+                    id = {MaSach}
+                    key= {"key_"+MaSach}
                     tensach={TenSach}
                     tentacgia = {TenTacGia}
                     tenloaisanpham = {TenLoaiSanPham}
@@ -50,6 +77,7 @@ class ListBook extends React.Component{
                     gia = {Gia}
                     soluong = {SoLuong}
                     bixoa = {BiXoa}
+                    handDelete = {this.handleDelete(MaSach)}
                 />
 			);
 		});

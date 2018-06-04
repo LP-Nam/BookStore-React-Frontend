@@ -38,10 +38,10 @@ class AccountRegister extends React.Component {
             .then(
                 (result) => {
                    var tmp = result[0].sl;
-                   console.log(tmp)
                     this.setState({
                         checkUsername:tmp
                     })
+
                 },
 
                 (error) => {
@@ -51,7 +51,6 @@ class AccountRegister extends React.Component {
                 }
             );
     }
-
     KiemTraThongTin = () => {
         let check = 1
         if (this.state.TenDangNhap == "") {
@@ -66,7 +65,6 @@ class AccountRegister extends React.Component {
                 usernameError: false
             })
         }
-        this.KiemTraUsernameTonTai()
         if(this.state.checkUsername != 0){      
             check = 0
             this.setState({
@@ -133,7 +131,7 @@ class AccountRegister extends React.Component {
     }
 
     onClickHandle = (e) => {
-        if (this.KiemTraThongTin()) {
+        if ( this.KiemTraThongTin()) {
             fetch("http://localhost:3001/api/register", {
                 method: 'POST',
                 headers: {
@@ -146,7 +144,7 @@ class AccountRegister extends React.Component {
                     TenHienThi: this.state.HoTen,
                     DiaChi: this.state.DiaChi,
                     DienThoai: this.state.DienThoai,
-                    Email: this.state.Email,
+                    Email: this.state.Email
                 })
             })
                 .then(res => res.json())
@@ -169,6 +167,7 @@ class AccountRegister extends React.Component {
     handleUserInput=(e)=>{
         const name = e.target.name;
         const value = e.target.value;
+        console.log(name + " "+value)
         this.setState({[name]: value});
     }
 
@@ -194,9 +193,7 @@ class AccountRegister extends React.Component {
             return(<div className='alert alert-success'>Đăng kí tài khoản thành công</div>)
         }
         else{
-
-            return (
-                
+            return (           
                 <div className="w100p well">
                     {errorAlert}
                     <form className="w60p center-block">

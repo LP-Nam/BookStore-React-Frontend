@@ -1,6 +1,9 @@
 import  React, { Component } from 'react';
-
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 class Book extends Component {
+    constructor(props){
+        super(props)
+    }
     render() {
         var icon = new String("glyphicon glyphicon-")
         if(this.props.bixoa == 1)
@@ -18,14 +21,10 @@ class Book extends Component {
                 <td>{this.props.gia}</td>
                 <td>{this.props.soluong}</td>
                 <td>
-                    <a>
-                        <span className="glyphicon glyphicon-pencil"></span>
-                    </a>
+                    <Link to={`/admin/UpdateBook/${this.props.id}`}><span className="glyphicon glyphicon-pencil"></span> </Link>
                 </td>
                 <td>
-                    <a>
-                        <span className={icon}></span>
-                    </a>
+                    <a href="" onClick={this.props.handleDelete}><span className={icon}></span></a>
                 </td>
         </tr>
         );

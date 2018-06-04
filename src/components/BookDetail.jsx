@@ -57,7 +57,7 @@ class BookDetail extends React.Component {
             <React.Fragment>
                 <div className="clearfix" id="productDetail">
                     <div className="w40p thumbnail pull-left">
-                        <img src={process.env.PUBLIC_URL + `/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items.TenSanPham}`} />
+                    <img src={process.env.PUBLIC_URL + `/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`} />
                     </div>
                     <div className="w60p pull-right">
                         <ul>

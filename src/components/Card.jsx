@@ -21,6 +21,11 @@ class Card extends Component {
 		str = str.substr(0,15)+"...";
 		return  str;
 	}
+	editCost()
+	{
+		var str = new String(this.props.giaBan)
+		str = str.lastIndexOf()
+	}
 	render() {
 		return(
 			<div className="w12e pull-left" title={this.props.tenSach}>
@@ -29,7 +34,7 @@ class Card extends Component {
 						<img src={this.props.hinhAnh} alt="image" />
 						<h4>{this.editBookName()}</h4>
 						<h4 className="small">{this.props.tenTacGia}</h4>
-						<h4 className="price">{this.props.giaBan},000 VNĐ</h4>
+						<h4 className="price">{this.props.giaBan} VNĐ</h4>
 					</Link>
 				</div>
 			</div>
