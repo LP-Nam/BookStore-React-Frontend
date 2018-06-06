@@ -77,7 +77,6 @@ class ListBook extends React.Component{
                     gia = {Gia}
                     soluong = {SoLuong}
                     bixoa = {BiXoa}
-                    handDelete = {this.handleDelete(MaSach)}
                 />
 			);
 		});

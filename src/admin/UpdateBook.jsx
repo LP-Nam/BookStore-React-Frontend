@@ -15,6 +15,7 @@ class UpdateBook extends Component {
         }
         this.handleInput = this.handleInput.bind(this)
         this.handleUploadImage = this.handleUploadImage.bind(this)
+        this.handleUploadImage = this.handleUploadImage.bind(this)
     }
     getType = ()=>{
         fetch(`http://localhost:3001/api/admin/getType`)
@@ -79,8 +80,7 @@ class UpdateBook extends Component {
             items: temp
         })
     }
-    handleSubmit=(e)=>{
-        e.preventDefault()
+    fectSubmit = ()=>{
         fetch(`http://localhost:3001/api/admin/UpdateBook/${this.props.match.params.id}`, {
             method: 'PUT',
             headers: {
@@ -110,16 +110,27 @@ class UpdateBook extends Component {
                }
             )
     }
-    handleUploadImage = (e)=>{
+    handleSubmit=(e)=>{
+        e.preventDefault()
+        if(this.state.imageSelect != null)
+        {
+            this.handleUploadImage()
+        }
+            this.fectSubmit()
+        
+    }
+    handleUploadImage = ()=>{
+        var check = 0
+        const formData = new FormData()
+        formData.append('file', this.state.imageSelect, this.state.imageSelect.name)
+        axios.post("http://localhost:3001/api/admin/upadateBook/uploadImage",formData)
+    }
+    handleImageChange = (e)=>{
         let reader = new FileReader();
-        let name = e.target.name;
         let file = e.target.files[0];
-        const temp= this.state.items.slice()
         reader.onloadend = () => {
-            temp[0][name] = file.name
             this.setState({
                 imageSelect: file,
-                items: temp,
                 imagePreviewURL: reader.result
             });
         }
@@ -186,7 +197,7 @@ class UpdateBook extends Component {
                                 Hình ảnh: 
                                 <input ref="HinhURL"
                                         type="file" 
-                                        onChange={this.handleUploadImage} 
+                                        onChange={this.handleImageChange} 
                                         accept="image/*" 
                                         className="form-control" 
                                         name="HinhURL">

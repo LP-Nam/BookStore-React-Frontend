@@ -8,7 +8,7 @@ class SearchBook extends Component {
                         <input type="text" className="form-control" placeholder="Tên Sách"  ></input>
                     </div>
                     <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
-                    <button type="button" className="btn" ><span class="glyphicon glyphicon-plus"></span></button>
+                    <button type="button" className="btn" ><span className="glyphicon glyphicon-plus"></span></button>
                 </form>
         );
     }
