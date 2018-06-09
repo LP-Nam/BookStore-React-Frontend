@@ -6,7 +6,8 @@ import ListBookType from "./ListBookType";
 import ListPublisher from "./ListPublisher";
 import ListAccount from "./ListAccount";
 import UpdateOrderBill from "./UpdateOrderBill";
-import UpdateBook from "./UpdateBook"
+import UpdateBook from "./UpdateBook";
+
 const MainRouterAdmin = () =>(
     <Switch>
         <Route exact path='/admin' component={ListOrderBill}/>

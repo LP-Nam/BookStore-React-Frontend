@@ -7,7 +7,8 @@ class BookDetail extends React.Component {
         super(props);
         this.state = {
             items: [{}],
-            inputQuanity: "1"
+            inputQuanity: "1",
+            tongSoBinhLuan: 0
         }
     }
 
@@ -16,7 +17,6 @@ class BookDetail extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
                     this.setState({
                         items: result
                     });
@@ -30,12 +30,32 @@ class BookDetail extends React.Component {
             );
     }
 
+    fetchAPIComment = (id) => {
+        fetch(`http://localhost:3001/api/comment/product/${id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        tongSoBinhLuan: result[0].SoLuong
+                    });
+                },
+
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            );
+    }
+
     componentDidMount() {
         this.fetchAPI(this.props.match.params.bookid);
+        this.fetchAPIComment(this.props.match.params.bookid);
     }
 
     componentWillReceiveProps(newprops) {
         this.fetchAPI(newprops.match.params.bookid);
+        this.fetchAPIComment(newprops.match.params.bookid);
     }
 
     render() {
@@ -47,17 +67,24 @@ class BookDetail extends React.Component {
                 gioHang = (<li className="list-group-item">
                     <form action="" method="post">
                         <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
-                        Số lượng: <input type="text"  defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
+                        Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
                     </form>
                 </li>);
             }
         }
 
+        let styleCmt = {
+            width: 500,
+            height: 80
+        };
+        let styleName = {
+            width: 500
+        };
         return (
             <React.Fragment>
                 <div className="clearfix" id="productDetail">
                     <div className="w40p thumbnail pull-left">
-                    <img src={process.env.PUBLIC_URL + `/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`} />
+                        <img src={process.env.PUBLIC_URL + `/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`} />
                     </div>
                     <div className="w60p pull-right">
                         <ul>
@@ -74,6 +101,17 @@ class BookDetail extends React.Component {
                 </div>
                 <BookDetailBottom MaSanPham={this.state.items[0].MaSanPham} MaLoaiSanPham={this.state.items[0].MaLoaiSanPham} />
 
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea class="form-control" rows="5" id="comment" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
+
+                    <label for="usr">Name:</label>
+                    <input type="text" class="form-control" id="usr" style={styleName} placeholder="Nhập tên của bạn" />
+                </div>
+                <button type="button" class="btn btn-primary">Bình Luận</button>
+
+                <hr />
+                <h4>Bình luận của bạn đọc <span class="label label-default">{this.state.tongSoBinhLuan}</span></h4>
             </React.Fragment>
         );
     }
