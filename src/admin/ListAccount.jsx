@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Account from "./Account";
+import queryString from 'query-string';
+import jwtDecode from "jwt-decode";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 class ListAccount extends Component {
     constructor(props){
         super(props);
@@ -8,7 +10,15 @@ class ListAccount extends Component {
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListAccount`,{
+     this.fecthAPI()
+    }
+    fecthAPI =()=>{
+        let username = ""
+        if(typeof(queryString.parse(this.props.location.search).username) != "undefined")
+        {
+            username = queryString.parse(this.props.location.search).username
+        }
+        fetch(`http://localhost:3001/api/admin/ListAccount?username=${username}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -30,8 +40,46 @@ class ListAccount extends Component {
         }
       );
     }
+    handleDelete = (id)=>{
+        let token = localStorage.getItem('token');
+        let user = jwtDecode(token);
+        let TenDangNhap=user.TenDangNhap;
+        if(TenDangNhap == id[2])
+        {
+            alert("không được xóa tài khoản hiện tại ")
+        }
+        else{
+            fetch(`http://localhost:3001/api/admin/UpdateAccount/${id[0]}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    BiXoa: !id[1],
+                })
+                })
+                .then(
+                   (result)=>{
+                      this.fecthAPI()
+                      
+                   },
+                   (error)=>{
+                        console.log(error);
+                   }
+                )
+        }
+        
+    }
     render() {
         const items = this.state.itemsListAccount.map((value, index) => {
+            var icon = new String("glyphicon glyphicon-")
+            if(value.BiXoa == 1)
+            {
+                icon = icon+"ok";
+            }
+            else
+                icon = icon +"remove"
             const MaTaiKhoan = value.MaTaiKhoan
             const TenDangNhap = value.TenDangNhap
             const TenHienThi = value.TenHienThi
@@ -40,23 +88,33 @@ class ListAccount extends Component {
             const Email = value.Email
             const BiXoa = value.BiXoa
             const TenLoaiTaiKhoan = value.TenLoaiTaiKhoan
-			return (
-                <Account   mataikhoan ={MaTaiKhoan} 
-                           tendangnhap ={TenDangNhap} 
-                           tenloaitaikhoan = {TenLoaiTaiKhoan}
-                           tenhienthi = {TenHienThi}
-                           dienthoai = {DienThoai}
-                           diachi = {DiaChi}
-                           email = {Email}
-                           bixoa = {BiXoa}
-                />
-			);
+            return (
+                <tr>
+                    <td>{MaTaiKhoan}</td>
+                    <td>{TenDangNhap}</td>
+                    <td>{TenLoaiTaiKhoan}</td>
+                    <td>{TenHienThi}</td>
+                    <td>{DienThoai}</td>
+                    <td>{DiaChi}</td>
+                    <td>{Email}</td>
+                    <td>
+                        <Link to={`/admin/UpdateAccount/${MaTaiKhoan}`}><a>
+                            <span className="glyphicon glyphicon-pencil"></span>
+                        </a></Link>
+                    </td>
+                    <td>
+                        <a href="#" onClick={this.handleDelete.bind(this,[MaTaiKhoan,BiXoa,TenDangNhap])}>
+                            <span className={icon}></span>
+                        </a>
+                    </td>
+                </tr>
+            );
 		});
         return (
             <div>
                 <form  className="navbar-form pull-right" id="searchBox">
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Tên đăng nhập"  ></input>
+                        <input type="text" name="username" className="form-control" placeholder="Tên đăng nhập"  ></input>
                     </div>
                     <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
                 </form>

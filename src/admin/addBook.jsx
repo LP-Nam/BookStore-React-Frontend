@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ImageUploader from 'react-images-upload';
 import axios from "axios";
 import { BrowserRouter, Route, Link,Redirect } from 'react-router-dom';
-class UpdateBook extends Component {
+class addBook extends Component {
     constructor(props){
         super(props)
         this.state={
@@ -10,10 +10,11 @@ class UpdateBook extends Component {
             types: [{}],
             publisher: [{}],
             imageSelect: null,
-            imagePreviewURL: ''  
+            imagePreviewURL: ''
             
         }
         this.handleInput = this.handleInput.bind(this)
+        this.handleUploadImage = this.handleUploadImage.bind(this)
         this.handleUploadImage = this.handleUploadImage.bind(this)
     }
     getType = ()=>{
@@ -52,24 +53,6 @@ class UpdateBook extends Component {
             }
         );
     }
-    fetchAPI = (id) => {
-        fetch(`http://localhost:3001/api/admin/findByBook/${id}`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    this.setState({
-                        items: result
-                    });
-                },
-
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            );
-    }
     handleInput = (e)=>{
         let name = e.target.name;
         let value = e.target.value;
@@ -80,8 +63,8 @@ class UpdateBook extends Component {
         })
     }
     fectSubmit = ()=>{
-        fetch(`http://localhost:3001/api/admin/UpdateBook/${this.props.match.params.id}`, {
-            method: 'PUT',
+        fetch(`http://localhost:3001/api/admin/addBook`, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -94,7 +77,7 @@ class UpdateBook extends Component {
                 GiaSanPham: this.refs.GiaSanPham.value,
                 MoTa: this.refs.MoTa.value,
                 SoLuongTon: this.refs.SoLuongTon.value,
-                HinhURL: this.state.imageSelect !=  null?this.state.imageSelect.name:this.state.items[0].HinhURL
+                HinhURL: this.state.imageSelect !=  null?this.state.imageSelect.name:""
             })
             })
             .then(
@@ -111,6 +94,7 @@ class UpdateBook extends Component {
     }
     handleSubmit=(e)=>{
         e.preventDefault()
+        console.log("aaa")
         if(this.state.imageSelect != null)
         {
             this.handleUploadImage()
@@ -139,7 +123,6 @@ class UpdateBook extends Component {
         }
     }
     componentDidMount() {
-        this.fetchAPI(this.props.match.params.id);
         this.getType();
         this.getPubliser();
     }
@@ -162,37 +145,33 @@ class UpdateBook extends Component {
                 </option>
 			);
         })
-        const img = this.state.imagePreviewURL == ''?
-                    (<img  src={`http://localhost:3001/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`}/>)
-                    :(<img src={this.state.imagePreviewURL} />)
-        const item = this.state.items.map((value,index)=>{
-            return(
-                    <div className="panel-body" key={"key_"+this.props.match.params.id}>
+        return(
+            <div className="panel">
+            <h2 className="page-header text-center">Thêm Sách</h2>
+            <div className="panel-body">
                         <div className="w40p thumbnail pull-left" id="productImg">
-                            {img}                
+                             <img src={this.state.imagePreviewURL} alt="vui lòng chọn hình" />
                         </div>
                         <div className="w40p pull-right" id="productInfo">
                             <form method="post" onSubmit={this.handleSubmit}>
                                 Tên: 
-                                <input type="text" ref="TenSanPham" onChange={this.handleInput} className="form-control" name="TenSanPham" value={value.TenSanPham}></input>
+                                <input type="text" ref="TenSanPham" onChange={this.handleInput} className="form-control" name="TenSanPham" ></input>
                                 Tác giả: 
-                                <input type="text" ref="TenTacGia" onChange={this.handleInput} className="form-control" name="TenTacGia" value={value.TenTacGia}></input>
+                                <input type="text" ref="TenTacGia" onChange={this.handleInput} className="form-control" name="TenTacGia" ></input>
                                 Thể loại: 
-                                <select ref="MaLoaiSanPham" className="form-control" onChange={this.handleInput} name="MaLoaiSanPham" value={value.MaLoaiSanPham}>
-                                    <option  className="hidden">-- Chọn thể loại --</option>
+                                <select ref="MaLoaiSanPham" className="form-control" onChange={this.handleInput} name="MaLoaiSanPham" >
                                         {type}
                                 </select>
                                 Nhà xuất bản: 
-                                <select ref="MaHangSanXuat" className="form-control" onChange={this.handleInput} name="MaHangSanXuat" value={value.MaHangSanXuat}>
-                                    <option value="" className="hidden">-- Chọn NXB --</option>
+                                <select ref="MaHangSanXuat" className="form-control" onChange={this.handleInput} name="MaHangSanXuat">
                                     {publisher}
                                 </select>
                                 Giá: 
-                                <input ref="GiaSanPham" type="text" onChange={this.handleInput} className="form-control" name="GiaSanPham" value={value.GiaSanPham}></input>
+                                <input ref="GiaSanPham" type="text" onChange={this.handleInput} className="form-control" name="GiaSanPham" ></input>
                                 Mô tả: 
-                                <textarea ref="MoTa" name="MoTa" onChange={this.handleInput} rows="3" className="form-control" value={value.MoTa}></textarea>
+                                <textarea ref="MoTa" name="MoTa" onChange={this.handleInput} rows="3" className="form-control" ></textarea>
                                 Số lượng:
-                                <input ref="SoLuongTon" type="text" onChange={this.handleInput} className="form-control" name="SoLuongTon" value={value.SoLuongTon}></input>
+                                <input ref="SoLuongTon" type="text" onChange={this.handleInput} className="form-control" name="SoLuongTon"></input>
                                 Hình ảnh: 
                                 <input ref="HinhURL"
                                         type="file" 
@@ -202,19 +181,13 @@ class UpdateBook extends Component {
                                         name="HinhURL">
                                 </input>
                                 <br></br>
-                                <button type="submit" className="btn btn-primary center-block">Cập nhật</button>
+                                <button type="submit" className="btn btn-primary center-block">Thêm</button>
                             </form>
                         </div>
                     </div>
-            )
-        })
-        return(
-            <div className="panel">
-            <h2 className="page-header text-center">Sửa sách #{this.props.match.params.id}</h2>
-                 {item}
             </div>
         )
     }
 }
 
-export default UpdateBook;
+export default addBook;

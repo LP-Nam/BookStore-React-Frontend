@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import queryString from 'query-string';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 class ListPublisher extends Component {
     constructor(props){
         super(props);
@@ -7,8 +8,34 @@ class ListPublisher extends Component {
             itemsListPublisher: [{}]
         }
     }
-    componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListPublisher`,{
+    handleDelele =(id)=>{
+        fetch(`http://localhost:3001/api/admin/UpdatePublisher/${id[0]}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                BiXoa: !id[1],
+            })
+            })
+            .then(
+               (result)=>{
+                  this.fecthAPI()
+                  
+               },
+               (error)=>{
+                    console.log(error);
+               }
+            )
+    }
+    fecthAPI =()=>{
+        let publishername = ""
+        if(typeof(queryString.parse(this.props.location.search).publishername) != "undefined")
+        {
+            publishername = queryString.parse(this.props.location.search).publishername
+        }
+        fetch(`http://localhost:3001/api/admin/ListPublisher?publishername=${publishername}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -30,26 +57,29 @@ class ListPublisher extends Component {
         }
       );
     }
+    componentDidMount(){
+       this.fecthAPI()
+    }
     render() {
-        var icon = new String("glyphicon glyphicon-")
-        if(this.props.bixoa == 1)
-        {
-            icon = icon+"ok";
-        }
-        else
-            icon = icon +"remove"
         const items = this.state.itemsListPublisher.map((value, index) => {
+            var icon = new String("glyphicon glyphicon-")
+            if(value.BiXoa == 1)
+            {
+                icon = icon+"ok";
+            }
+            else
+                icon = icon +"remove"
 			return (
                  <tr>
                     <td>{value.MaHangSanXuat}</td>
                     <td>{value.TenHangSanXuat}</td>
                     <td>
-                        <a>
+                        <Link to = {`/admin/UpdatePubliser/${value.MaHangSanXuat}`}><a>
                             <span className="glyphicon glyphicon-pencil"></span>
-                        </a>
+                        </a></Link>
                     </td>
                     <td>
-                        <a>
+                        <a href="#"onClick={this.handleDelele.bind(this,[value.MaHangSanXuat,value.BiXoa])}>
                             <span className={icon}></span>
                         </a>
                     </td>
@@ -60,9 +90,10 @@ class ListPublisher extends Component {
             <div>
                  <form  className="navbar-form pull-right" id="searchBox">
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Tên loại sách"  ></input>
+                        <input type="text" name="publishername" className="form-control" placeholder="Tên hãng sản xuất"  ></input>
                     </div>
                     <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
+                    <Link to="/admin/addPubliser"><button type="button" className="btn" ><span className="glyphicon glyphicon-plus"></span></button></Link>
                 </form>
                 <table className="table table-striped" id="orderList">
                     <thead>

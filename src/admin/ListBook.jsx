@@ -1,30 +1,29 @@
 import React from "react";
 import Book from "./Book";
 import Search from "./SearchBook";
+import queryString from 'query-string';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 class ListBook extends React.Component{
     constructor(props){
         super(props);
         this.state={
             itemsListBook: [{}]
         }
-        this.handleDelete = this.handleDelete.bind(this)
     }
     handleDelete = (id)=>{
-        fetch(`http://localhost:3001/api/admin/UpdateBook/${id}`, {
+        fetch(`http://localhost:3001/api/admin/UpdateBook/${id[0]}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                BiXoa: !this.props.bixoa,
+                BiXoa: !id[1],
             })
             })
             .then(
                (result)=>{
-                  this.setState({
-                      redirect: true
-                  })
+                  this.fecthApi()
                   
                },
                (error)=>{
@@ -32,8 +31,13 @@ class ListBook extends React.Component{
                }
             )
     }
-    componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListBook`,{
+    fecthApi =()=>{
+        let bookname = ""
+        if(typeof(queryString.parse(this.props.location.search).bookname) != "undefined")
+        {
+             bookname = queryString.parse(this.props.location.search).bookname
+        }
+        fetch(`http://localhost:3001/api/admin/ListBook?bookname=${bookname}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -55,6 +59,9 @@ class ListBook extends React.Component{
         }
       );
     }
+    componentDidMount(){
+       this.fecthApi()
+    }
     render()
     {
         const items = this.state.itemsListBook.map((value, index) => {
@@ -66,18 +73,28 @@ class ListBook extends React.Component{
             const BiXoa = value.BiXoa
             const SoLuong = value.SoLuongTon
             const MaSach = value.MaSanPham
+            var icon = new String("glyphicon glyphicon-")
+            if(BiXoa == 1)
+            {
+                icon = icon+"ok";
+            }
+            else
+                icon = icon +"remove"
 			return (
-                <Book 
-                    id = {MaSach}
-                    key= {"key_"+MaSach}
-                    tensach={TenSach}
-                    tentacgia = {TenTacGia}
-                    tenloaisanpham = {TenLoaiSanPham}
-                    tennxb = {TenNXB}
-                    gia = {Gia}
-                    soluong = {SoLuong}
-                    bixoa = {BiXoa}
-                />
+                <tr key={"key_"+MaSach}>
+                    <td>{TenSach}</td>
+                    <td>{TenTacGia}</td>
+                    <td>{TenLoaiSanPham}</td>
+                    <td>{TenNXB}</td>
+                    <td>{Gia}</td>
+                    <td>{SoLuong}</td>
+                    <td>
+                        <Link to={`/admin/UpdateBook/${MaSach}`}><span className="glyphicon glyphicon-pencil"></span> </Link>
+                    </td>
+                    <td>
+                        <a href="#" onClick={this.handleDelete.bind(this,[MaSach,BiXoa])} ><span className={icon}></span></a>
+                    </td>
+                </tr>
 			);
 		});
         return(

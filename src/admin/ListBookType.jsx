@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import queryString from 'query-string';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 class ListBookType extends Component {
     constructor(props){
         super(props);
@@ -7,8 +8,34 @@ class ListBookType extends Component {
             itemsListBookType: [{}]
         }
     }
-    componentDidMount(){
-        fetch(`http://localhost:3001/api/admin/ListBookType`,{
+    handleDelele =(id)=>{
+        fetch(`http://localhost:3001/api/admin/UpdateBookType/${id[0]}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                BiXoa: !id[1],
+            })
+            })
+            .then(
+               (result)=>{
+                  this.fecthAPI()
+                  
+               },
+               (error)=>{
+                    console.log(error);
+               }
+            )
+    }
+    fecthAPI = ()=>{
+        let booktypename = ""
+        if(typeof(queryString.parse(this.props.location.search).booktypename) != "undefined")
+        {
+            booktypename = queryString.parse(this.props.location.search).booktypename
+        }
+        fetch(`http://localhost:3001/api/admin/ListBookType?booktypename=${booktypename}`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -17,7 +44,6 @@ class ListBookType extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result);
           this.setState({
             itemsListBookType: result
           });
@@ -30,26 +56,30 @@ class ListBookType extends Component {
         }
       );
     }
+    componentDidMount(){
+        this.fecthAPI()
+    }
     render() {
-        var icon = new String("glyphicon glyphicon-")
-        if(this.props.bixoa == 1)
-        {
-            icon = icon+"ok";
-        }
-        else
-            icon = icon +"remove"
         const items = this.state.itemsListBookType.map((value, index) => {
+            var icon = new String("glyphicon glyphicon-")
+            if(value.BiXoa == 1)
+            {
+                icon = icon+"ok";
+            }
+            else
+                icon = icon +"remove"
 			return (
-                 <tr>
+                 <tr key={"key_"+value.MaLoaiSanPham}>
                     <td>{value.MaLoaiSanPham}</td>
                     <td>{value.TenLoaiSanPham}</td>
                     <td>
-                        <a>
+                        <Link to={`/admin/UpdateBookType/${value.MaLoaiSanPham}`}><a>
                             <span className="glyphicon glyphicon-pencil"></span>
-                        </a>
+                        </a></Link>
+
                     </td>
                     <td>
-                        <a>
+                        <a href="#" onClick={this.handleDelele.bind(this,[value.MaLoaiSanPham,value.BiXoa])} >
                             <span className={icon}></span>
                         </a>
                     </td>
@@ -60,9 +90,10 @@ class ListBookType extends Component {
             <div>
                 <form  className="navbar-form pull-right" id="searchBox">
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Tên loại sách"  ></input>
+                        <input type="text" className="form-control" name="booktypename" placeholder="Tên loại sách"  ></input>
                     </div>
                     <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
+                    <Link to="/admin/addBookType"><button type="button" className="btn" ><span className="glyphicon glyphicon-plus"></span></button></Link>
                 </form>
                 <table className="table table-striped" id="orderList">
                 <thead>

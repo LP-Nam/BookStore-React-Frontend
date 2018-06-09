@@ -1,6 +1,7 @@
 import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
+import queryString from 'query-string';
 class ListOrderBill extends React.Component {
     constructor(props) {
         super(props);
@@ -8,8 +9,14 @@ class ListOrderBill extends React.Component {
             itemsListOrderBill: [{}]
         }
     }
-    componentDidMount() {
-        fetch('http://localhost:3001/api/admin/ListOrderBill', {
+    componentDidMount() 
+    {
+        let date = ""
+        if(typeof(queryString.parse(this.props.location.search).date) != "undefined")
+        {
+             date = queryString.parse(this.props.location.search).date
+        }
+        fetch(`http://localhost:3001/api/admin/ListOrderBill?date=${date}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`

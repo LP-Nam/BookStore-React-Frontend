@@ -24,9 +24,9 @@ class Book extends Component {
                     <Link to={`/admin/UpdateBook/${this.props.id}`}><span className="glyphicon glyphicon-pencil"></span> </Link>
                 </td>
                 <td>
-                    <a href="" ><span className={icon}></span></a>
+                    <a href="" onClick={this.props.handleDelete} ><span className={icon}></span></a>
                 </td>
-        </tr>
+            </tr>
         );
     }
 }

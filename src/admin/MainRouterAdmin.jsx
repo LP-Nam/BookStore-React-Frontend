@@ -6,7 +6,14 @@ import ListBookType from "./ListBookType";
 import ListPublisher from "./ListPublisher";
 import ListAccount from "./ListAccount";
 import UpdateOrderBill from "./UpdateOrderBill";
-import UpdateBook from "./UpdateBook"
+import UpdateBook from "./UpdateBook";
+import addBook from "./addBook";
+import UpdateBookType from "./UpdateBookType";
+import addBookType from "./addBookType";
+import UpdatePubliser from "./UpdatePublisher";
+import addPubliser from "./addPublisher"
+import UpdatePublisher from "./UpdatePublisher";
+import UpdateAccount from "./UpdateAccount"
 const MainRouterAdmin = () =>(
     <Switch>
         <Route exact path='/admin' component={ListOrderBill}/>
@@ -17,6 +24,12 @@ const MainRouterAdmin = () =>(
 
         <Route path='/admin/UpdateOrderBill/:id' component={UpdateOrderBill}/>
         <Route path='/admin/UpdateBook/:id' component={UpdateBook} />
+        <Route path='/admin/addBook' component={addBook} />
+        <Route path='/admin/UpdateBookType/:id' component={UpdateBookType} />
+        <Route path='/admin/addBookType' component={addBookType} />
+        <Route path='/admin/UpdatePubliser/:id' component={UpdatePublisher} />
+        <Route path='/admin/addPubliser' component={addPubliser} />
+        <Route path='/admin/UpdateAccount/:id' component={UpdateAccount} />
     </Switch>
 );
 

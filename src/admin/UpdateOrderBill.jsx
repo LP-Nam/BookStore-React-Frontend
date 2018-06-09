@@ -21,7 +21,6 @@ class UpdateOrderBill extends Component {
           .then(res => res.json())
           .then(
             (result) => {
-              console.log(result);
               this.setState({
                 items: result,
                 loadSuccess: true
@@ -40,7 +39,6 @@ class UpdateOrderBill extends Component {
         .then(res => res.json())
         .then(
           (result) => {
-            console.log(result);
             this.setState({
               status: result,
               loadSuccess: true
