@@ -1,7 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Search from "./Search"
 class Navigation extends React.Component{
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            style:"hidden"
+        }
+        this.handleOption = this.handleOption.bind(this)
+    }
+    handleOption()
+    {
+        if(this.state.style == "advSearch")
+        {
+            this.setState(prevState => ({
+                style: "hidden"
+              }));
+        }
+        else{
+            this.setState(prevState => ({
+                style: "advSearch"
+              }));
+        }
+    }
     render()
     {
         return(
@@ -10,16 +32,16 @@ class Navigation extends React.Component{
                     <ul className="nav navbar-nav">
                         <li className="active"><Link to='/'>TRANG CHỦ</Link></li>
                     </ul>
-                    <form action="index.php" method="get" className="navbar-form navbar-right" id="searchBox">
-                        <input type="hidden" name="a" value="5"></input>
+                    <form action="/SearchResult" className="navbar-form navbar-right" id="searchBox">
                         <div className="input-group">
                             <input type="search" name="TenSach" id="TuKhoa" placeholder="Tên sách" className="form-control"></input>
-                            {/* <span className="input-group-btn">
-                                <button type="button" className="btn btn-default" onclick="TimKiemNangCao();">Tuỳ chọn</button>
-                            </span> */}
+                            <span className="input-group-btn">
+                                <button type="button" className="btn btn-default" onClick={this.handleOption} >Tuỳ chọn</button>
+                            </span>
                         </div>
                         <button type="submit" className="btn"><span className="glyphicon glyphicon-search"></span></button>
-                        <div id="advSearch">
+                        <div id={this.state.style}>
+                            <Search />
                         </div>
                     </form>
                 </div>
