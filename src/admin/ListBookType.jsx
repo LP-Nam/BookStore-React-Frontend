@@ -73,9 +73,9 @@ class ListBookType extends Component {
                     <td>{value.MaLoaiSanPham}</td>
                     <td>{value.TenLoaiSanPham}</td>
                     <td>
-                        <Link to={`/admin/UpdateBookType/${value.MaLoaiSanPham}`}><a>
+                        <Link to={`/admin/UpdateBookType/${value.MaLoaiSanPham}`}>
                             <span className="glyphicon glyphicon-pencil"></span>
-                        </a></Link>
+                        </Link>
 
                     </td>
                     <td>

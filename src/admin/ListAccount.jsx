@@ -89,7 +89,7 @@ class ListAccount extends Component {
             const BiXoa = value.BiXoa
             const TenLoaiTaiKhoan = value.TenLoaiTaiKhoan
             return (
-                <tr>
+                <tr key={"key_"+MaTaiKhoan}>
                     <td>{MaTaiKhoan}</td>
                     <td>{TenDangNhap}</td>
                     <td>{TenLoaiTaiKhoan}</td>
@@ -98,9 +98,9 @@ class ListAccount extends Component {
                     <td>{DiaChi}</td>
                     <td>{Email}</td>
                     <td>
-                        <Link to={`/admin/UpdateAccount/${MaTaiKhoan}`}><a>
+                        <Link to={`/admin/UpdateAccount/${MaTaiKhoan}`}>
                             <span className="glyphicon glyphicon-pencil"></span>
-                        </a></Link>
+                        </Link>
                     </td>
                     <td>
                         <a href="#" onClick={this.handleDelete.bind(this,[MaTaiKhoan,BiXoa,TenDangNhap])}>
