@@ -1,7 +1,7 @@
 import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
 import jwtDecode from "jwt-decode";
-import { testClick } from './testClick.js';
+// import { clickDatHang } from './clickDatHang.js';
 
 class BookDetail extends React.Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class BookDetail extends React.Component {
     }
 
     componentDidMount() {
-        testClick();
+        // clickDatHang();
 
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
@@ -66,32 +66,48 @@ class BookDetail extends React.Component {
             alert('Sách không đủ số lượng đặt hàng');
         }
         else {
+            if (localStorage.getItem('carts')) {
+                let flag = false;
+                let precount = localStorage.getItem('countCart');
+                var countCart;
+                let carts = JSON.parse(localStorage.getItem('carts'));
 
+                for (let i = 0; i < precount; i++) {
+                    if (carts['danhsach'][i].MaSanPham === this.state.items.MaSanPham) {
+                        flag = true;
+                        carts['danhsach'][i].SoLuong = parseInt(this.refs.txtSoLuongNhap.value);
+                        break;
+                    }
+                }
+                if (flag === false) {
+                    countCart = parseInt(precount) + 1;
+                    carts['danhsach'].push({
+                        "MaSanPham": this.state.items.MaSanPham,
+                        "SoLuong": this.refs.txtSoLuongNhap.value
+                    });
+                }
+                else{
+                    countCart = parseInt(precount);
+                }
+
+                localStorage.setItem('countCart', countCart);
+                localStorage.setItem('carts', JSON.stringify(carts));
+            }
+            else {
+                let countCart = 1;
+                let carts = JSON.stringify({
+                    "danhsach": [{
+                        "MaSanPham": this.state.items.MaSanPham,
+                        "SoLuong": this.refs.txtSoLuongNhap.value
+                    }]
+                });
+                localStorage.setItem('countCart', countCart);
+                localStorage.setItem('carts', carts);
+            }
         }
     }
 
     render() {
-        // let gioHang = null;
-        // let token = localStorage.getItem('token');
-        // if (token) {
-        //     let user = jwtDecode(token);
-        //     if (user) {
-        //         gioHang = (<li className="list-group-item">
-        //             <form action="" method="post">
-        //                 <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
-        //                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
-        //             </form>
-        //         </li>);
-        //     }
-        // }
-
-        let gioHang = gioHang = (<li className="list-group-item">
-            <form action="" method="post">
-                <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
-                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
-            </form>
-        </li>);
-
         let styleCmt = {
             width: 500,
             height: 80
@@ -115,7 +131,7 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
                             <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
                             <li className="list-group-item">
-                                <button type="button" id="test" ref="test" onClick={this.XuLyThemGioHang}>Đặt vào giỏ hàng</button>
+                                <button type="button" id="test" ref="test" onClick={this.XuLyThemGioHang}>Thêm vào giỏ hàng</button>
                                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
                             </li>
                         </ul>
