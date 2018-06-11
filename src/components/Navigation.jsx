@@ -1,17 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
+import Search from "./Search";
 
-class Navigation extends React.Component {
-    render() {
-        let styleCmt = {
-            width: 100,
-            height: 50,
-        };
-
-        return (
-=======
-import Search from "./Search"
 class Navigation extends React.Component{
     constructor(props)
     {
@@ -37,8 +27,11 @@ class Navigation extends React.Component{
     }
     render()
     {
+        let styleCmt = {
+            width: 100,
+            height: 50,
+        };
         return(
->>>>>>> 0c1af3575da73c3aa99c18e2dfec211630f530c9
             <div className="container" id="navigation">
                 <div className="navbar navbar-inverse">
                     <ul className="nav navbar-nav">
@@ -72,5 +65,6 @@ class Navigation extends React.Component{
 
         )
     }
-}
+};
+
 export default Navigation;
