@@ -1,6 +1,7 @@
 import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
 import jwtDecode from "jwt-decode";
+import { testClick } from './testClick.js';
 
 class BookDetail extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class BookDetail extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        items: result
+                        items: result[0]
                     });
                 },
 
@@ -49,6 +50,8 @@ class BookDetail extends React.Component {
     }
 
     componentDidMount() {
+        testClick();
+
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
     }
@@ -56,6 +59,15 @@ class BookDetail extends React.Component {
     componentWillReceiveProps(newprops) {
         this.fetchAPI(newprops.match.params.bookid);
         this.fetchAPIComment(newprops.match.params.bookid);
+    }
+
+    XuLyThemGioHang = () => {
+        if (this.state.items.SoLuongTon - this.refs.txtSoLuongNhap.value < 0) {
+            alert('Sách không đủ số lượng đặt hàng');
+        }
+        else {
+
+        }
     }
 
     render() {
@@ -91,22 +103,25 @@ class BookDetail extends React.Component {
             <React.Fragment>
                 <div className="clearfix" id="productDetail">
                     <div className="w40p thumbnail pull-left">
-                        <img src={`http://localhost:3001/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`} />
+                        <img src={`http://localhost:3001/images/Product/${this.state.items.HinhURL}`} alt={`${this.state.items.TenSanPham}`} />
                     </div>
                     <div className="w60p pull-right">
                         <ul>
-                            <li className="list-group-item"><h2>{this.state.items[0].TenSanPham}</h2></li>
-                            <li className="list-group-item"><b>Tác giả: </b>{this.state.items[0].TenTacGia}</li>
-                            <li className="list-group-item"><b>Nhà xuất bản: </b>{this.state.items[0].TenHangSanXuat}</li>
-                            <li className="list-group-item"><b>Thể loại: </b>{this.state.items[0].TenLoaiSanPham}</li>
-                            <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items[0].MoTa}</li>
-                            <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items[0].SoLuongTon} quyển</li>
-                            <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items[0].GiaSanPham} VNĐ</span></h4></li>
-                            {gioHang}
+                            <li className="list-group-item"><h2>{this.state.items.TenSanPham}</h2></li>
+                            <li className="list-group-item"><b>Tác giả: </b>{this.state.items.TenTacGia}</li>
+                            <li className="list-group-item"><b>Nhà xuất bản: </b>{this.state.items.TenHangSanXuat}</li>
+                            <li className="list-group-item"><b>Thể loại: </b>{this.state.items.TenLoaiSanPham}</li>
+                            <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
+                            <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
+                            <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
+                            <li className="list-group-item">
+                                <button type="button" id="test" ref="test" onClick={this.XuLyThemGioHang}>Đặt vào giỏ hàng</button>
+                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <BookDetailBottom MaSanPham={this.state.items[0].MaSanPham} MaLoaiSanPham={this.state.items[0].MaLoaiSanPham} />
+                <BookDetailBottom MaSanPham={this.state.items.MaSanPham} MaLoaiSanPham={this.state.items.MaLoaiSanPham} />
 
                 <div class="form-group">
                     <label for="comment">Comment:</label>

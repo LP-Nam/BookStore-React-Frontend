@@ -41,10 +41,9 @@ class Navigation extends React.Component{
                                 <span class="glyphicon glyphicon-shopping-cart"></span> <b>Giỏ Hàng</b>
                             </button>
                         </li>
-                        <div id="ex2">
+
+                        <div id="ex2" style={styleCmt}>
                             <span class="fa-stack fa-5x has-badge" data-count="2">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
                             </span>
                         </div>
                     </ul>
