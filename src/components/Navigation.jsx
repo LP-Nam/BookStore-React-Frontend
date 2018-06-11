@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Search from "./Search";
 
 class Navigation extends React.Component {
@@ -7,7 +7,7 @@ class Navigation extends React.Component {
         super(props)
         this.state = {
             style: "hidden",
-            countCart: localStorage.getItem('countCart') ? localStorage.getItem('countCart') : 0
+            countCart: localStorage.getItem('countCart') ? localStorage.getItem('countCart') : 0,
         }
         this.handleOption = this.handleOption.bind(this)
     }
@@ -24,20 +24,22 @@ class Navigation extends React.Component {
             }));
         }
     }
+
     render() {
         let styleCmt = {
             width: 100,
             height: 50,
         };
+
         return (
             <div className="container" id="navigation">
                 <div className="navbar navbar-inverse">
                     <ul className="nav navbar-nav">
-                        <li className="active"><Link to='/'>TRANG CHỦ</Link></li>
+                        <li className="active"><Link to='/'><b>TRANG CHỦ</b></Link></li>
                         <li>
-                            <button type="button" class="btn btn-default btn-sm" style={styleCmt}>
+                            <Link to="/ShoppingCart">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> <b>Giỏ Hàng</b>
-                            </button>
+                            </Link>
                         </li>
                         <div id="ex2" style={styleCmt}>
                             <span class="fa-stack fa-5x has-badge" data-count={this.state.countCart}>

@@ -131,7 +131,7 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
                             <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
                             <li className="list-group-item">
-                                <button type="button" id="test" ref="test" onClick={this.XuLyThemGioHang}>Thêm vào giỏ hàng</button>
+                                <button type="button" class="btn btn-danger" ref="test" onClick={()=>this.XuLyThemGioHang()}>Thêm vào giỏ hàng</button>
                                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
                             </li>
                         </ul>
