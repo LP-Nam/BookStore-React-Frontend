@@ -5,7 +5,7 @@ class TopBar extends React.Component {
 
     render() {
         if (localStorage.getItem('token')) {
-            let token = localStorage.getItem('token');
+            //let token = localStorage.getItem('token');
             return <InfoAccount />
         }
         return (

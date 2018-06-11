@@ -1,6 +1,7 @@
 import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
 import jwtDecode from "jwt-decode";
+// import { clickDatHang } from './clickDatHang.js';
 
 class BookDetail extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class BookDetail extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        items: result
+                        items: result[0]
                     });
                 },
 
@@ -49,6 +50,8 @@ class BookDetail extends React.Component {
     }
 
     componentDidMount() {
+        // clickDatHang();
+
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
     }
@@ -58,21 +61,53 @@ class BookDetail extends React.Component {
         this.fetchAPIComment(newprops.match.params.bookid);
     }
 
-    render() {
-        let gioHang = null;
-        let token = localStorage.getItem('token');
-        if (token) {
-            let user = jwtDecode(token);
-            if (user) {
-                gioHang = (<li className="list-group-item">
-                    <form action="" method="post">
-                        <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
-                        Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
-                    </form>
-                </li>);
+    XuLyThemGioHang = () => {
+        if (this.state.items.SoLuongTon - this.refs.txtSoLuongNhap.value < 0) {
+            alert('Sách không đủ số lượng đặt hàng');
+        }
+        else {
+            if (localStorage.getItem('carts')) {
+                let flag = false;
+                let precount = localStorage.getItem('countCart');
+                var countCart;
+                let carts = JSON.parse(localStorage.getItem('carts'));
+
+                for (let i = 0; i < precount; i++) {
+                    if (carts['danhsach'][i].MaSanPham === this.state.items.MaSanPham) {
+                        flag = true;
+                        carts['danhsach'][i].SoLuong = parseInt(this.refs.txtSoLuongNhap.value);
+                        break;
+                    }
+                }
+                if (flag === false) {
+                    countCart = parseInt(precount) + 1;
+                    carts['danhsach'].push({
+                        "MaSanPham": this.state.items.MaSanPham,
+                        "SoLuong": this.refs.txtSoLuongNhap.value
+                    });
+                }
+                else{
+                    countCart = parseInt(precount);
+                }
+
+                localStorage.setItem('countCart', countCart);
+                localStorage.setItem('carts', JSON.stringify(carts));
+            }
+            else {
+                let countCart = 1;
+                let carts = JSON.stringify({
+                    "danhsach": [{
+                        "MaSanPham": this.state.items.MaSanPham,
+                        "SoLuong": this.refs.txtSoLuongNhap.value
+                    }]
+                });
+                localStorage.setItem('countCart', countCart);
+                localStorage.setItem('carts', carts);
             }
         }
+    }
 
+    render() {
         let styleCmt = {
             width: 500,
             height: 80
@@ -84,22 +119,25 @@ class BookDetail extends React.Component {
             <React.Fragment>
                 <div className="clearfix" id="productDetail">
                     <div className="w40p thumbnail pull-left">
-                        <img src={`http://localhost:3001/images/Product/${this.state.items[0].HinhURL}`} alt={`${this.state.items[0].TenSanPham}`} />
+                        <img src={`http://localhost:3001/images/Product/${this.state.items.HinhURL}`} alt={`${this.state.items.TenSanPham}`} />
                     </div>
                     <div className="w60p pull-right">
                         <ul>
-                            <li className="list-group-item"><h2>{this.state.items[0].TenSanPham}</h2></li>
-                            <li className="list-group-item"><b>Tác giả: </b>{this.state.items[0].TenTacGia}</li>
-                            <li className="list-group-item"><b>Nhà xuất bản: </b>{this.state.items[0].TenHangSanXuat}</li>
-                            <li className="list-group-item"><b>Thể loại: </b>{this.state.items[0].TenLoaiSanPham}</li>
-                            <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items[0].MoTa}</li>
-                            <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items[0].SoLuongTon} quyển</li>
-                            <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items[0].GiaSanPham} VNĐ</span></h4></li>
-                            {gioHang}
+                            <li className="list-group-item"><h2>{this.state.items.TenSanPham}</h2></li>
+                            <li className="list-group-item"><b>Tác giả: </b>{this.state.items.TenTacGia}</li>
+                            <li className="list-group-item"><b>Nhà xuất bản: </b>{this.state.items.TenHangSanXuat}</li>
+                            <li className="list-group-item"><b>Thể loại: </b>{this.state.items.TenLoaiSanPham}</li>
+                            <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
+                            <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
+                            <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
+                            <li className="list-group-item">
+                                <button type="button" class="btn btn-danger" ref="test" onClick={()=>this.XuLyThemGioHang()}>Thêm vào giỏ hàng</button>
+                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <BookDetailBottom MaSanPham={this.state.items[0].MaSanPham} MaLoaiSanPham={this.state.items[0].MaLoaiSanPham} />
+                <BookDetailBottom MaSanPham={this.state.items.MaSanPham} MaLoaiSanPham={this.state.items.MaLoaiSanPham} />
 
                 <div class="form-group">
                     <label for="comment">Comment:</label>
