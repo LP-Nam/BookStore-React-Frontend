@@ -14,7 +14,11 @@ import UpdatePubliser from "./UpdatePublisher";
 import addPubliser from "./addPublisher"
 import UpdatePublisher from "./UpdatePublisher";
 import UpdateAccount from "./UpdateAccount"
+<<<<<<< HEAD
 
+=======
+import OrderbillDetail from "./OrderbillDetail"
+>>>>>>> 0c1af3575da73c3aa99c18e2dfec211630f530c9
 const MainRouterAdmin = () =>(
     <Switch>
         <Route exact path='/admin' component={ListOrderBill}/>
@@ -31,6 +35,7 @@ const MainRouterAdmin = () =>(
         <Route path='/admin/UpdatePubliser/:id' component={UpdatePublisher} />
         <Route path='/admin/addPubliser' component={addPubliser} />
         <Route path='/admin/UpdateAccount/:id' component={UpdateAccount} />
+        <Route path='/admin/OrderbillDetail/:id' component={OrderbillDetail} />
     </Switch>
 );
 

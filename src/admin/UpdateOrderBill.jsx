@@ -11,10 +11,7 @@ class UpdateOrderBill extends Component {
           loadSuccess: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleDateChange = this.handleDateChange.bind(this)
-        this.handleCustomerIDChange = this.handleCustomerIDChange.bind(this)
-        this.handleTotalMoneyChange = this.handleTotalMoneyChange.bind(this)
-        this.handleStatusChange = this.handleStatusChange.bind(this)
+        this.handleInput = this.handleInput.bind(this)
       }
     fetchAPI = (id) => {
         fetch(`http://localhost:3001/api/admin/UpdateOrderBill/${id}`)                                                                                                              
@@ -56,36 +53,41 @@ class UpdateOrderBill extends Component {
         this.fetchAPI(this.props.match.params.id);
         this.getStatus();
       }
-      handleDateChange=(event)=>{
-          const temp = this.state.items.slice();
-          temp[0].NgayLap = event.target.value;
-          this.setState({
-              items: temp
-          })
-      }
-      handleCustomerIDChange=(event)=>{
-        const temp = this.state.items.slice();
-        temp[0].MaTaiKhoan = event.target.value;
+      handleInput = (e)=>{
+        let name = e.target.name;
+        let value = e.target.value;
+        const temp= this.state.items.slice()
+        temp[0][name] = value
         this.setState({
             items: temp
         })
     }
-    handleTotalMoneyChange=(event)=>{
-            const temp = this.state.items.slice();
-            temp[0].TongThanhTien = event.target.value;
-            this.setState({
-                items: temp
+    updateAccount = ()=>{
+        fetch(`http://localhost:3001/api/admin/UpdateAccountAdmin`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaTaiKhoan: this.refs.MaKhachHang.value,
+                TenHienThi: this.refs.TenHienThi.value,
+                DiaChi: this.refs.DiaChi.value,
             })
-    }
-    handleStatusChange =(event)=>{
-        const temp = this.state.items.slice();
-        temp[0].MaTinhTrang = event.target.value;
-        this.setState({
-            items: temp
-        })
+            })
+            .then(
+               (result)=>{
+                  this.setState({
+                      redirect: true
+                  })
+                  
+               },
+               (error)=>{
+                    console.log(error);
+               }
+            )
     }
       handleSubmit=(event)=> {
-    
         fetch(`http://localhost:3001/api/admin/UpdateOrderBill/${this.state.items[0].MaDonDatHang}`, {
             method: 'POST',
             headers: {
@@ -95,6 +97,8 @@ class UpdateOrderBill extends Component {
             body: JSON.stringify({
                 NgayLap: this.refs.NgayLap.value,
                 MaTaiKhoan: this.refs.MaKhachHang.value,
+                TenHienThi: this.refs.TenHienThi.value,
+                DiaChi: this.refs.DiaChi.value,
                 TongThanhTien: this.refs.TongThanhTien.value,
                 MaTinhTrang: this.refs.TinhTrang.value
             })
@@ -110,6 +114,7 @@ class UpdateOrderBill extends Component {
                     console.log(error);
                }
             )
+            this.updateAccount()
       }
       pad = (number)=>{
         if (number < 10) {
@@ -127,6 +132,10 @@ class UpdateOrderBill extends Component {
         ':' + this.pad(date.getSeconds());
       }
     render() {
+        if(this.state.redirect)
+        {
+            return <Redirect to = '/admin' />
+        }
         const options = this.state.status.map((value, index) => {
             const id = value.MaTinhTrang;
             const tentinhtrang = value.TenTinhTrang;
@@ -145,13 +154,17 @@ class UpdateOrderBill extends Component {
 
                         <div className="frmEdit w40p center-block">
                             Ngày tạo: 
-                            <input  type="datetime-local" onChange={this.handleDateChange} ref="NgayLap" className="form-control" name="NgayLap" value={this.formatdate()}></input>
+                            <input  type="datetime-local" name="NgayLap" onChange={this.handleInput} ref="NgayLap" className="form-control" value={this.formatdate()}></input>
                             Mã khách hàng: 
-                            <input type="text" className="form-control" onChange={this.handleCustomerIDChange} ref="MaKhachHang" value={this.state.loadSuccess?this.state.items[0].MaTaiKhoan:""}></input>
+                            <input type="text" className="form-control" onChange={this.handleInput} name="MaTaiKhoan" ref="MaKhachHang" value={this.state.loadSuccess?this.state.items[0].MaTaiKhoan:""}></input>
+                            Họ tên: 
+                            <input type="text" className="form-control" onChange={this.handleInput} name="TenHienThi" ref="TenHienThi" value={this.state.loadSuccess?this.state.items[0].TenHienThi:""}></input>
+                            Địa chỉ: 
+                            <input type="text" className="form-control" onChange={this.handleInput} name="DiaChi" ref="DiaChi" value={this.state.loadSuccess?this.state.items[0].DiaChi:""}></input>
                             Tổng tiền: 
-                            <input type="text" className="form-control" onChange={this.handleTotalMoneyChange} ref="TongThanhTien" placeholder="Tổng tiền" name="TongThanhTien" value={this.state.loadSuccess?this.state.items[0].TongThanhTien:""}></input>
+                            <input type="text" className="form-control" onChange={this.handleInput} name="TongThanhTien" ref="TongThanhTien" placeholder="Tổng tiền" name="TongThanhTien" value={this.state.loadSuccess?this.state.items[0].TongThanhTien:""}></input>
                             Trạng thái: 
-                            <select className="form-control" ref="TinhTrang" onChange={this.handleStatusChange} value={this.state.loadSuccess?this.state.items[0].MaTinhTrang:""} >
+                            <select className="form-control" name="MaTinhTrang" ref="TinhTrang" onChange={this.handleInput} value={this.state.loadSuccess?this.state.items[0].MaTinhTrang:""} >
                                 <option  value="" className="hidden">-- Chọn trạng thái --</option>  
                                  {options}
                             </select>

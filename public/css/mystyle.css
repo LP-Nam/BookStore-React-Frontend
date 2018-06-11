@@ -86,11 +86,12 @@ h3 {
 #searchBox {
     margin-right: 0;
 }
-
+#hidden{
+    display: none
+}
 #advSearch {
     position: absolute;
     z-index: 1;
-    display: none;
 }
 
 #advSearch ul li {

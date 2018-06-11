@@ -2,7 +2,11 @@ import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
 import queryString from 'query-string';
+<<<<<<< HEAD
 
+=======
+import Detail from "./OrderbillDetail"
+>>>>>>> 0c1af3575da73c3aa99c18e2dfec211630f530c9
 class ListOrderBill extends React.Component {
     constructor(props) {
         super(props);
@@ -10,8 +14,7 @@ class ListOrderBill extends React.Component {
             itemsListOrderBill: [{}]
         }
     }
-    componentDidMount() 
-    {
+    getOrderbill = ()=>{
         let date = ""
         if(typeof(queryString.parse(this.props.location.search).date) != "undefined")
         {
@@ -38,6 +41,10 @@ class ListOrderBill extends React.Component {
                 }
             );
     }
+    componentDidMount() 
+    {
+      this.getOrderbill()  
+    }
 
     render() {
         const items = this.state.itemsListOrderBill.map((value, index) => {
@@ -46,16 +53,20 @@ class ListOrderBill extends React.Component {
             const MaTinhTrang = value.MaTinhTrang;
             const TenTinhTrang = value.TenTinhTrang;
             const NgayLap = value.NgayLap;
+            const DiaChi = value.DiaChi;
+            const HoTen = value.TenHienThi
             const TongTien = value.TongThanhTien;
             return (
-                <OrderBill id={MaDonHang}
-                    key={"key_" + MaDonHang}
-                    makhachhang={MaKhachHang}
-                    matinhtrang={MaTinhTrang}
-                    tentinhtrang={TenTinhTrang}
-                    ngaylap={NgayLap}
-                    tongtien={TongTien}
-                />
+                    <OrderBill id={MaDonHang}
+                        key={"key_" + MaDonHang}
+                        makhachhang={MaKhachHang}
+                        matinhtrang={MaTinhTrang}
+                        tentinhtrang={TenTinhTrang}
+                        diachi={DiaChi}
+                        hoten={HoTen}
+                        ngaylap={NgayLap}
+                        tongtien={TongTien}
+                    />
             );
         });
         return (
@@ -67,6 +78,8 @@ class ListOrderBill extends React.Component {
                         <tr className="nb active">
                             <td>Mã Đơn Hàng</td>
                             <td>Mã Khách Hàng</td>
+                            <td>Họ tên </td>
+                            <td>Địa chỉ</td>
                             <td>Tổng tiền</td>
                             <td>Ngày lập đơn</td>
                             <td colSpan="4">Trạng thái</td>
@@ -74,10 +87,6 @@ class ListOrderBill extends React.Component {
                     </thead>
                     <tbody>
                         {items}
-                        {/*chi tiết hóa đơn*/}
-                        <tr className="hidden">
-                            {/* include('templates/DonDatHang/tempChiTietDonDatHang.php'); */}
-                        </tr>
                     </tbody>
                 </table>
             </div>

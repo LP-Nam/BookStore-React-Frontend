@@ -19,7 +19,6 @@ class ListGroup extends Component {
 			.then(res => res.json())
 			.then(
 				(result) => {
-					console.log(result);
 					this.setState({
 						groupItems: result
 					});

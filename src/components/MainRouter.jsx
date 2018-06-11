@@ -5,7 +5,7 @@ import BookByCategory from "./BookByCategory";
 import BookByPublisher from "./BookByPublisher";
 import BookDetail from "./BookDetail";
 import AccountRegister from "./AccountRegister";
-
+import SearchResult from "./SearchResult"
 const MainRouter = () =>(
     <Switch>
         <Route exact path='/' component={Content}/>
@@ -13,6 +13,7 @@ const MainRouter = () =>(
         <Route path='/AccountRegister' component={AccountRegister}/>
         <Route path='/publisher/:id' component={BookByPublisher}/>
         <Route path='/product/:bookid' component={BookDetail}/>
+        <Route path='/SearchResult' component={SearchResult}/>
     </Switch>
 );
 
