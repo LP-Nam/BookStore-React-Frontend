@@ -1,11 +1,8 @@
 import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
-<<<<<<< HEAD
 import queryString from 'query-string';
-=======
 
->>>>>>> 6328d3166dadef0ba768190f311e09bfae49a732
 class ListOrderBill extends React.Component {
     constructor(props) {
         super(props);

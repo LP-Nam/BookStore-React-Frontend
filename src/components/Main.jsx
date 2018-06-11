@@ -8,11 +8,29 @@ import Footer from "./Footer";
 import Content from "./Content";
 import MainRouter from "./MainRouter";
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import Time from "react-input-datetime-local";
 
 class Main extends Component {
 
 	constructor(props) {
 		super(props);
+
+		let tmp = [
+			{
+				"soluong": 0
+			},
+			{
+				"ten": "sach1",
+				"id": 65,
+				"gia": 120000,
+			}
+		]
+
+		let item = JSON.stringify(
+			tmp
+		);
+
+		localStorage.setItem('gioHang', item);
 
 		this.render = this.render.bind(this);
 	}

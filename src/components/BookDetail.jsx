@@ -59,19 +59,26 @@ class BookDetail extends React.Component {
     }
 
     render() {
-        let gioHang = null;
-        let token = localStorage.getItem('token');
-        if (token) {
-            let user = jwtDecode(token);
-            if (user) {
-                gioHang = (<li className="list-group-item">
-                    <form action="" method="post">
-                        <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
-                        Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
-                    </form>
-                </li>);
-            }
-        }
+        // let gioHang = null;
+        // let token = localStorage.getItem('token');
+        // if (token) {
+        //     let user = jwtDecode(token);
+        //     if (user) {
+        //         gioHang = (<li className="list-group-item">
+        //             <form action="" method="post">
+        //                 <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
+        //                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
+        //             </form>
+        //         </li>);
+        //     }
+        // }
+
+        let gioHang = gioHang = (<li className="list-group-item">
+            <form action="" method="post">
+                <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
+                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" />
+            </form>
+        </li>);
 
         let styleCmt = {
             width: 500,
