@@ -68,11 +68,9 @@ class BookDetail extends React.Component {
         else {
             if (localStorage.getItem('carts')) {
                 let flag = false;
-                let precount = localStorage.getItem('countCart');
-                var countCart;
                 let carts = JSON.parse(localStorage.getItem('carts'));
 
-                for (let i = 0; i < precount; i++) {
+                for (let i = 0; i < carts['danhsach'].length; i++) {
                     if (carts['danhsach'][i].MaSanPham === this.state.items.MaSanPham) {
                         flag = true;
                         carts['danhsach'][i].SoLuong = parseInt(this.refs.txtSoLuongNhap.value);
@@ -80,28 +78,22 @@ class BookDetail extends React.Component {
                     }
                 }
                 if (flag === false) {
-                    countCart = parseInt(precount) + 1;
                     carts['danhsach'].push({
                         "MaSanPham": this.state.items.MaSanPham,
-                        "SoLuong": this.refs.txtSoLuongNhap.value
+                        "SoLuong": this.refs.txtSoLuongNhap.value,
+                        "GiaSanPham": this.state.items.GiaSanPham
                     });
                 }
-                else{
-                    countCart = parseInt(precount);
-                }
-
-                localStorage.setItem('countCart', countCart);
                 localStorage.setItem('carts', JSON.stringify(carts));
             }
             else {
-                let countCart = 1;
                 let carts = JSON.stringify({
                     "danhsach": [{
                         "MaSanPham": this.state.items.MaSanPham,
-                        "SoLuong": this.refs.txtSoLuongNhap.value
+                        "SoLuong": this.refs.txtSoLuongNhap.value,
+                        "GiaSanPham": this.state.items.GiaSanPham
                     }]
                 });
-                localStorage.setItem('countCart', countCart);
                 localStorage.setItem('carts', carts);
             }
         }

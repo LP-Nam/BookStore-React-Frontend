@@ -37,6 +37,10 @@ class CartContent extends React.Component {
         //this.fetchAPI(this.newProps.MaSanPham);
     }
 
+    test = () => {
+
+    }
+
     render() {
         const ten = this.state.items.TenSanPham;
         const url = this.state.items.HinhURL;
@@ -49,13 +53,13 @@ class CartContent extends React.Component {
                 <tr>
                     <td width="20%">
                         <input type="hidden" name="MaSanPham" value={this.state.items.MaSanPham} />
-                        <Card key={"key_"+ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/"+url}/>
+                        <Card key={"key_" + ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/" + url} />
                     </td>
-                    <td><input type="text" class="form-control wA" name="txtSoLuong" id="txtSoLuong" value={this.props.SoLuong} /></td>
-                    <td><button type="button" name="action" value="CapNhat" class="btn btn-success" onclick="return KiemTraCapNhat(<?php echo $SoLuongTon; ?>)">Cập nhật</button></td>
-                    <td><button type="button" name="action" value="Huy" class="btn btn-info">Hủy</button></td>
+                    <td><input type="text" class="form-control wA" name="txtSoLuong" id="txtSoLuong" ref="txtSoLuong" value={this.props.SoLuong} onChange={this.test} /></td>
+                    <td><button type="button" name="action" value="CapNhat" class="btn btn-success"> Cập nhật</button></td>
+                    <td><button type="button" name="action" value="Huy" class="btn btn-info" onClick={this.props.handleClickHuy}>Hủy</button></td>
                 </tr>
-            </div>
+            </div >
         )
     }
 }

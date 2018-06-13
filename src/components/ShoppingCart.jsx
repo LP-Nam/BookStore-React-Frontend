@@ -6,78 +6,87 @@ class ShoppingCart extends React.Component {
         super(props);
 
         this.state = {
-            count: localStorage.getItem('countCart') ? localStorage.getItem('countCart') : 0,
-            items: localStorage.getItem('carts') ? localStorage.getItem('carts') : null
+            items: localStorage.getItem('carts') ? localStorage.getItem('carts') : null,
+            TongTien: 0
         }
     }
 
     HuyTatCa = () => {
-        localStorage.removeItem('countCart');
+        // localStorage.removeItem('countCart');
         localStorage.removeItem('carts');
         this.setState({
-            count: 0,
             items: null
         })
+    }
+
+    Huy1Sach = (maSach) => {
+
+        // let precount = localStorage.getItem('countCart');
+        // let countCart = parseInt(precount) - 1;
+
+        let carts = JSON.parse(localStorage.getItem('carts'));
+        let ds = carts['danhsach'];
+
+        let idx = -1;
+        for (let i = 0; i < ds.length; i++) {
+            if (ds[i].MaSanPham == maSach) {
+                idx = i;
+                break;
+            }
+        }
+
+        if (idx > -1) {
+            carts['danhsach'].splice(idx, 1);
+            // localStorage.setItem('countCart', countCart);
+            localStorage.setItem('carts', JSON.stringify(carts));
+            this.setState({ items: JSON.stringify(carts) });
+        }
     }
 
     render() {
         let carts = JSON.parse(this.state.items);
         var cardsContent = null;
+
+        var tmptt = 0;
+
         if (carts) {
             cardsContent = carts['danhsach'].map((sach, index) => {
                 const ma = sach.MaSanPham;
-                const sl = sach.SoLuong;
+                var sl = sach.SoLuong;
+
+                console.log(parseInt(sl));
+                console.log(parseInt(sach.GiaSanPham));
+                tmptt += parseInt(sl) * parseInt(sach.GiaSanPham);
+
                 return (
-                    <CartContent key={ma} MaSanPham={ma} SoLuong={sl} />
+                    <CartContent key={ma} MaSanPham={ma} SoLuong={sl} handleClickHuy={() => this.Huy1Sach(ma)} />
                 );
             });
         }
 
+        tmptt = (tmptt).toLocaleString('en');
 
         return (
             <React.Fragment>
-                {/* <?php changeTitle("Giỏ hàng của tôi"); ?>
-
-<?php 
-	if (isset($_GET['check']) && $_GET['check'] == 1) 
-    {
-		$ThongBao = "đặt hàng thành công";
-?>
-    <div class='alert alert-success'><?php echo $ThongBao; ?></div>
-<?php
-    } 
-     else if (isset($_GET['check']) && $_GET['check'] == 0) 
-        {
-			$ThongBao = "không thể đặt hàng";
-?>
-    <div class='alert alert-danger'><?php echo $ThongBao; ?></div>
-<?php 
-		}
-?>
-<?php
-	if(isset($_SESSION["MaTaiKhoan"]))
-	{
- ?> */}
-                < table class="table table-striped" id="cartItems" >
+                <div class='alert alert-danger'>Thông báo gì đó</div>
+                <table class="table table-striped" id="cartItems">
                     <tr class="nb">
-                        <td>
-                        </td>
                         <td></td>
-                        <td><button class="btn btn-danger" onclick="">Đặt hàng</button></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Đặt hàng</button></td>
                         <td><button class="btn btn-primary" onClick={this.HuyTatCa}>Hủy tất cả</button></td>
                     </tr>
                     <tr>
                         <th>Sản phẩm</th>
                         <th>Số lượng</th>
-                        <th></th>
-                        <th></th>
+                        {/* <th></th>
+                        <th></th> */}
                     </tr>
                     {cardsContent}
                     <tr>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Tổng tiền: </td>
+                        <b>{tmptt} VNĐ</b>
                     </tr>
                 </table>
             </React.Fragment>
