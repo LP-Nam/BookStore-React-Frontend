@@ -10,7 +10,8 @@ class BookDetail extends React.Component {
         this.state = {
             items: [{}],
             inputQuanity: "1",
-            tongSoBinhLuan: 0
+            tongSoBinhLuan: 0,
+            isCartSuccess: false,
         }
     }
 
@@ -97,6 +98,7 @@ class BookDetail extends React.Component {
                 });
                 localStorage.setItem('carts', carts);
             }
+            this.setState({ isCartSuccess: true })
         }
     }
 
@@ -108,6 +110,11 @@ class BookDetail extends React.Component {
         let styleName = {
             width: 500
         };
+
+        let successCart = this.state.isCartSuccess ? (<div class="alert alert-success">
+            <strong>Thành công!</strong> Đã thêm sách vào giỏ hàng.
+      </div>) : null;
+
         return (
             <React.Fragment>
                 <div className="clearfix" id="productDetail">
@@ -123,12 +130,14 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
                             <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
                             <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
-                            <li className="list-group-item"> 
-                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />    
-                           </li>
-                           <li className="list-group-item">
-                               <button type="Submit" onClick={this.XuLyThemGioHang} className="btn btn-danger" >Đặt vào giỏ hàng</button>
-                           </li>
+                            <li className="list-group-item">
+                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
+                            </li>
+                            <li className="list-group-item">
+                                <button type="Submit" onClick={this.XuLyThemGioHang} className="btn btn-danger" >Đặt vào giỏ hàng</button>
+
+                            </li>
+                            {successCart}
                         </ul>
                     </div>
                 </div>

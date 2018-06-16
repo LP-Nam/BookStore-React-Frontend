@@ -224,15 +224,18 @@ h3 {
     font-weight:bold;
 }
 
-
-#test{
-    display: inline-block;
+#test {
+    display: flex;
     justify-content: center;
     align-items: center;
-
-    width: 160px;
+  }
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+  #test {
+    width: 100px;
     height: 50px;
-    background: #ff5126;
+    background: transparent;
     border-radius: 10px;
     will-change: transform;
     transition: all 0.2s ease;
@@ -240,41 +243,34 @@ h3 {
     cursor: pointer;
     color: #fff;
     font-size: 16px;
+    color: #ff5126;
     outline: none;
     text-align: center;
-}
-
-#test::before, #test::after{
-    box-sizing: border-box;
-}
-
-#test:hover{
-    border: 2px solid #ff5126;
-    background: transparent;
-    color: #ff5126;
-}
-
-#test:active{
+  }
+  #test:hover {
+    background: #ff5126;
+    color: #fff;
+  }
+  #test:active {
     font-size: 15px;
     transform: translateY(1px);
-
+  }
+  #test.active {
     font-size: 0;
     border-radius: 25px;
     width: 50px;
     background: transparent;
-}
-
-#test:loader{
+  }
+  #test.loader {
     border-right: 2px solid #fff;
     animation: loader 0.4s linear infinite;
-}
-
-#test:success{
+  }
+  #test.success {
     background: #3bb873;
     border-color: #3bb873;
     font-size: 14px;
     color: #fff;
-}
+  }
   @keyframes loader {
     0% {
       transform: rotateZ(0);
@@ -283,3 +279,4 @@ h3 {
       transform: rotateZ(360deg);
     }
   }
+  
