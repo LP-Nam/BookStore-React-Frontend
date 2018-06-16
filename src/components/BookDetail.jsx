@@ -127,7 +127,7 @@ class BookDetail extends React.Component {
                                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />    
                            </li>
                            <li className="list-group-item">
-                               <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
+                               <button type="Submit" onClick={this.XuLyThemGioHang} className="btn btn-danger" >Đặt vào giỏ hàng</button>
                            </li>
                         </ul>
                     </div>
