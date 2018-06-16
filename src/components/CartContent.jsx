@@ -6,7 +6,9 @@ class CartContent extends React.Component {
         super(props);
 
         this.state = {
-            items: [{}]
+            items: [{}],
+            SoLuong: 0,
+            isAlert: false,
         }
     }
 
@@ -30,11 +32,26 @@ class CartContent extends React.Component {
 
     componentDidMount() {
         this.fetchAPI(this.props.MaSanPham);
+        this.setState({ SoLuong: this.props.SoLuong });
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps);
+        // console.log(newProps);
         //this.fetchAPI(this.newProps.MaSanPham);
+    }
+
+    handleChange = (e) => {
+        if (e.target.value > this.state.items.SoLuongTon) {
+            this.setState({ isAlert: true });
+        }
+        else {
+            this.setState({ isAlert: false });
+            this.setState({ SoLuong: e.target.value });
+        }
+    }
+
+    handleClickUpdate = () => {
+        this.props.handleClickUpdate(this.state.SoLuong, this.state.items.MaSanPham);
     }
 
     render() {
@@ -44,18 +61,32 @@ class CartContent extends React.Component {
         const tacGia = this.state.items.TenTacGia;
         const gia = this.state.items.GiaSanPham;
 
+        let style = {
+            width: 230,
+            height: 70,
+            position: "absolute",
+        };
+
+        let alert = this.state.isAlert ? (<div class="alert alert-danger" style={style}>
+            <strong>Sách không đủ số lượng để đặt hàng, vui lòng nhập lại!</strong>
+        </div>) : null;
+
         return (
-            <div>
-                <tr>
-                    <td width="20%">
-                        <input type="hidden" name="MaSanPham" value={this.state.items.MaSanPham} />
-                        <Card key={"key_"+ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/"+url}/>
-                    </td>
-                    <td><input type="text" class="form-control wA" name="txtSoLuong" id="txtSoLuong" value={this.props.SoLuong} /></td>
-                    <td><button type="button" name="action" value="CapNhat" class="btn btn-success" onclick="return KiemTraCapNhat(<?php echo $SoLuongTon; ?>)">Cập nhật</button></td>
-                    <td><button type="button" name="action" value="Huy" class="btn btn-info">Hủy</button></td>
-                </tr>
-            </div>
+            <React.Fragment>
+                <table>
+                    <tr>
+                        <td width="20%">
+                            <input type="hidden" name="MaSanPham" value={this.state.items.MaSanPham} />
+                            <Card key={"key_" + ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/" + url} />
+                        </td>
+                        <td>&nbsp;</td>
+                        <td><input type="number" class="form-control wA" name="txtSoLuong" id="txtSoLuong" ref="txtSoLuong" defaultValue={this.props.SoLuong} onChange={this.handleChange} />{alert}</td>
+                        <td><button type="button" name="action" value="CapNhat" class="btn btn-success" disabled={this.state.isAlert} onClick={this.handleClickUpdate}> Cập nhật</button></td>
+                        <td><button type="button" name="action" value="Huy" class="btn btn-info" onClick={this.props.handleClickHuy}>Hủy</button>
+                        </td>
+                    </tr>
+                </table>
+            </React.Fragment>
         )
     }
 }
