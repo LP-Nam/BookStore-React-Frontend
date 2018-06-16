@@ -1,4 +1,3 @@
-
 body {
     background-color: #f9f9f9;
 }
@@ -68,7 +67,7 @@ h3 {
 }
 
 .panel .panel-heading {
-    background: black;
+    background: #222;
     color: #fff;
 }
 
@@ -87,6 +86,7 @@ h3 {
 #searchBox {
     margin-right: 0;
 }
+
 #advSearch {
     position: absolute;
     z-index: 1;
@@ -119,9 +119,7 @@ h3 {
 .frmLogin {
     margin: auto;
 }
-.btn{
-    margin-left: 5px
-}
+
 .frmLogin input {
     display: inline-block;
     width: auto;
@@ -207,79 +205,3 @@ h3 {
     background-color: #222 !important;
     color: #fff !important;
 }
-
-#ex2 .fa-stack[data-count]:after{
-    position:absolute;
-    right:-65%;
-    top:-45%;
-    content: attr(data-count);
-    font-size:25%;
-    padding:.6em;
-    border-radius:999px;
-    line-height:.75em;
-    color: white;
-    background:rgba(255,0,0,.85);
-    text-align:center;
-    min-width:2em;
-    font-weight:bold;
-}
-
-
-#test{
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-
-    width: 160px;
-    height: 50px;
-    background: #ff5126;
-    border-radius: 10px;
-    will-change: transform;
-    transition: all 0.2s ease;
-    border: 2px solid #ff5126;
-    cursor: pointer;
-    color: #fff;
-    font-size: 16px;
-    outline: none;
-    text-align: center;
-}
-
-#test::before, #test::after{
-    box-sizing: border-box;
-}
-
-#test:hover{
-    border: 2px solid #ff5126;
-    background: transparent;
-    color: #ff5126;
-}
-
-#test:active{
-    font-size: 15px;
-    transform: translateY(1px);
-
-    font-size: 0;
-    border-radius: 25px;
-    width: 50px;
-    background: transparent;
-}
-
-#test:loader{
-    border-right: 2px solid #fff;
-    animation: loader 0.4s linear infinite;
-}
-
-#test:success{
-    background: #3bb873;
-    border-color: #3bb873;
-    font-size: 14px;
-    color: #fff;
-}
-  @keyframes loader {
-    0% {
-      transform: rotateZ(0);
-    }
-    100% {
-      transform: rotateZ(360deg);
-    }
-  }
