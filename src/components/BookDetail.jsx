@@ -11,6 +11,17 @@ class BookDetail extends React.Component {
             inputQuanity: "1",
             tongSoBinhLuan: 0,
             isCartSuccess: false,
+            listComment: [{}],
+            TenHienThi: null,
+            afterAddCmt: null,
+        }
+    }
+
+    getTenHienThi = () => {
+        if (localStorage.getItem('token')) {
+            let token = localStorage.getItem('token');
+            let user = jwtDecode(token);
+            this.setState({ TenHienThi: user.TenHienThi })
         }
     }
 
@@ -50,14 +61,36 @@ class BookDetail extends React.Component {
             );
     }
 
+    fetchListComment = (id) => {
+        fetch(`http://localhost:3001/api/comment/getList/${id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        listComment: result
+                    });
+                },
+
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            );
+    }
+
     componentDidMount() {
+        this.getTenHienThi();
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
+        this.fetchListComment(this.props.match.params.bookid);
     }
 
     componentWillReceiveProps(newprops) {
+        this.getTenHienThi();
         this.fetchAPI(newprops.match.params.bookid);
         this.fetchAPIComment(newprops.match.params.bookid);
+        this.fetchListComment(newprops.match.params.bookid);
     }
 
     XuLyThemGioHang = () => {
@@ -97,8 +130,46 @@ class BookDetail extends React.Component {
             }
             this.setState({ isCartSuccess: true })
             let that = this;
-            setTimeout(function(){that.setState({isCartSuccess: false})}, 5000);
+            setTimeout(function () { that.setState({ isCartSuccess: false }) }, 5000);
         }
+    }
+
+    XuLyThemBinhLuan = () => {
+        let tmpname = this.state.TenHienThi ? this.state.TenHienThi : this.refs.usrcmt.value;
+        let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let cmt = {
+            MaSanPham: this.state.items.MaSanPham,
+            TenHienThi: tmpname,
+            NoiDung: this.refs.NoiDung.value,
+            ThoiGian: tg,
+        }
+
+        fetch('http://localhost:3001/api/comment', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cmt: cmt,
+            })
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        afterAddCmt: result,
+                        tongSoBinhLuan: parseInt(this.state.tongSoBinhLuan) + 1,
+                    });
+                    this.fetchListComment(this.state.items.MaSanPham);
+                },
+
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            );
     }
 
     render() {
@@ -113,6 +184,23 @@ class BookDetail extends React.Component {
         let successCart = this.state.isCartSuccess ? (<div class="alert alert-success">
             <strong>Thành công!</strong> Đã thêm sách vào giỏ hàng.
       </div>) : null;
+
+        const listComment = this.state.listComment.map((comment, index) => {
+            const name = comment.TenHienThi;
+            const nd = comment.NoiDung;
+            let tmp=comment.ThoiGian;
+            let date=new Date(tmp);
+            const time = date.toLocaleString();
+            return (
+                <React.Fragment>
+                    <b>{name}</b> <i>{time}</i> <br />
+                    <span>{nd}</span> <hr />
+                </React.Fragment>
+            );
+        });
+
+        const inputNameComment = this.state.TenHienThi ? null : (<span><label for="usr">Name:</label>
+            <input type="text" class="form-control" id="usr" ref="usrcmt" style={styleName} placeholder="Nhập tên của bạn" /></span>);
 
         return (
             <React.Fragment>
@@ -144,15 +232,17 @@ class BookDetail extends React.Component {
 
                 <div class="form-group">
                     <label for="comment">Comment:</label>
-                    <textarea class="form-control" rows="5" id="comment" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
+                    <textarea class="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
 
-                    <label for="usr">Name:</label>
-                    <input type="text" class="form-control" id="usr" style={styleName} placeholder="Nhập tên của bạn" />
+                    {inputNameComment}
                 </div>
-                <button type="button" class="btn btn-primary">Bình Luận</button>
+                <button type="button" class="btn btn-primary" onClick={this.XuLyThemBinhLuan}>Bình Luận</button>
 
                 <hr />
                 <h4>Bình luận của bạn đọc <span class="label label-default">{this.state.tongSoBinhLuan}</span></h4>
+                <div>
+                    {listComment}
+                </div>
             </React.Fragment>
         );
     }
