@@ -1,6 +1,7 @@
 import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
 import jwtDecode from "jwt-decode";
+import $ from "jquery";
 // import { clickDatHang } from './clickDatHang.js';
 
 class BookDetail extends React.Component {
@@ -130,10 +131,12 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
                             <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
                             <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
-                            <li className="list-group-item">
-                                <button type="button" class="btn btn-danger" ref="test" onClick={()=>this.XuLyThemGioHang()}>Thêm vào giỏ hàng</button>
-                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
-                            </li>
+                            <li className="list-group-item"> 
+                                Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />    
+                           </li>
+                           <li className="list-group-item">
+                               <button type="Submit" className="btn btn-danger" >Đặt vào giỏ hàng</button>
+                           </li>
                         </ul>
                     </div>
                 </div>

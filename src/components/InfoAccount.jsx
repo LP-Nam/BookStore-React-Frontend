@@ -12,14 +12,21 @@ class InfoAccount extends React.Component {
         let user = jwtDecode(token);
         let TenHienThi = user.TenHienThi;
         let loaiTK = user.MaLoaiTaiKhoan;
-        let tmp = loaiTK == 2 ? (<li><Link to="/admin"> Trang quản lý</Link></li>) : null;
+        let ad = loaiTK == 2 ? (<li><Link to="/admin"><i className="glyphicon glyphicon-user"></i>  Trang quản lý</Link></li>) : (null);
+        
         return (
                 <div className="container" id="topBar">
                     <div className="navbar navbar-inverse">
-                        <ul className="nav navbar-nav pull-right">
-                            <li><a href="#">Hello, {TenHienThi}</a></li>
-                            {tmp}
-                            <li onClick={this.DangXuatHandle}><a href='#'> Đăng xuất</a></li>
+                        <ul className="nav pull-right">
+                            <li className="dropdown"><a href="#" className="dropdown-toggle" data-toggle="dropdown">Welcome, {TenHienThi} <b className="caret"></b></a>
+                                <ul className="dropdown-menu">
+                                    {ad}
+                                    <li><Link to="/UpdateInfor"><i className="glyphicon glyphicon-pencil"></i> Cập nhật thông tin</Link></li>
+                                    <li><Link to="/ChangePassword"><i className="glyphicon glyphicon-lock"></i> Đổi mật khẩu</Link></li>
+                                    <li className="divider"></li>
+                                    <li><a href="#" onClick={this.DangXuatHandle}><i className="glyphicon glyphicon-off"></i> Đăng xuất</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>

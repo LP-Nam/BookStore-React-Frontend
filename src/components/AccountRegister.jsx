@@ -10,7 +10,6 @@ class AccountRegister extends React.Component {
             passwordValid: false,
             emailValid: false,
             formValid: true,
-            checkUsername: 0,
             TenDangNhap: '',
             MatKhau: '',
             NhapLaiMatKhau: '',
@@ -31,25 +30,9 @@ class AccountRegister extends React.Component {
     //         alert('Tên đăng nhập đã tồn tại');
     //     }
     // }
-
-    KiemTraUsernameTonTai = () => {
-        fetch(`http://localhost:3001/api/checkUsername/${this.state.TenDangNhap}`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                   var tmp = result[0].sl;
-                    this.setState({
-                        checkUsername:tmp
-                    })
-
-                },
-
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            );
+    checkUsername = ()=>{
+        return Promise.all([fetch(`http://localhost:3001/api/checkUsername/${this.state.TenDangNhap}`)
+        .then(res => res.json())])
     }
     KiemTraThongTin = () => {
         let check = 1
@@ -65,8 +48,8 @@ class AccountRegister extends React.Component {
                 usernameError: false
             })
         }
-        if(this.state.checkUsername != 0){      
-            check = 0
+        if(this.state.checkUsername!= 0){   
+            check = 0   
             this.setState({
                 formValid:false,
                 usernameExist:true
@@ -77,9 +60,9 @@ class AccountRegister extends React.Component {
                 usernameExist:false
             })
         }
-         if (this.state.MatKhau.length < 8) {
-             check = 0
-             this.setState({
+        if (this.state.MatKhau.length < 8) {
+            check = 0
+                this.setState({
                 formValid:false,
                 passError: true
             })
@@ -127,47 +110,55 @@ class AccountRegister extends React.Component {
                 emailError:false
             })
         }
-        return check
+        return check;
     }
 
     onClickHandle = (e) => {
-        if ( this.KiemTraThongTin()) {
-            fetch("http://localhost:3001/api/register", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    TenDangNhap: this.state.TenDangNhap,
-                    MatKhau: this.state.MatKhau,
-                    TenHienThi: this.state.HoTen,
-                    DiaChi: this.state.DiaChi,
-                    DienThoai: this.state.DienThoai,
-                    Email: this.state.Email
+            var that = this
+            this.checkUsername()
+            .then(([value])=>{
+                this.setState({
+                    checkUsername: value[0].sl
                 })
+                if(that.KiemTraThongTin())
+                {
+                    fetch("http://localhost:3001/api/register", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            TenDangNhap: this.state.TenDangNhap,
+                            MatKhau: this.state.MatKhau,
+                            TenHienThi: this.state.HoTen,
+                            DiaChi: this.state.DiaChi,
+                            DienThoai: this.state.DienThoai,
+                            Email: this.state.Email
+                        })
+                        })
+                        .then(res => res.json())
+                        .then(
+                            (result) => {
+                                this.setState({
+                                    Result: result.affectedRows
+                                });
+                            },
+        
+                            (error) => {
+                                this.setState({
+                                    error
+                                });
+                            }
+                        );
+                }
             })
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        this.setState({
-                            Result: result.affectedRows
-                        });
-                    },
-
-                    (error) => {
-                        this.setState({
-                            error
-                        });
-                    }
-                );
-        }
+           
     }
 
     handleUserInput=(e)=>{
         const name = e.target.name;
         const value = e.target.value;
-        console.log(name + " "+value)
         this.setState({[name]: value});
     }
 
@@ -198,7 +189,7 @@ class AccountRegister extends React.Component {
                     {errorAlert}
                     <form className="w60p center-block">
                         <h2 className="page-header text-center">Đăng ký tài khoản</h2>
-                        <p>Tên đăng nhập:<input className="form-control" type="text" id="txtTenDangNhap" name="TenDangNhap" value={this.state.TenDangNhap} onChange={this.handleUserInput} /></p>
+                        <p>Tên đăng nhập:<input  className="form-control" type="text" id="txtTenDangNhap" name="TenDangNhap" value={this.state.TenDangNhap} onChange={this.handleUserInput} /></p>
                         <p>Mật khẩu:  <input className="form-control" type="password" id="txtMatKhau" name="MatKhau" value={this.state.MatKhau} onChange={this.handleUserInput} ></input></p>
                         <p>Nhập lại mật khẩu:  <input className="form-control" type="password" id="NhapLaiMatKhau" name="NhapLaiMatKhau" value={this.state.NhapLaiMatKhau} onChange={this.handleUserInput} ></input></p>
                         <p>Họ tên:  <input className="form-control" type="text" id="txtHoTen" name="HoTen" value={this.state.HoTen} onChange={this.handleUserInput} ></input></p>

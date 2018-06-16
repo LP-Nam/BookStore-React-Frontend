@@ -7,7 +7,8 @@ import BookDetail from "./BookDetail";
 import AccountRegister from "./AccountRegister";
 import SearchResult from "./SearchResult";
 import ShoppingCart from "./ShoppingCart";
-
+import ChangePassword from "./ChangePassword";
+import UpdateInfor from "./UpdateInfo";
 const MainRouter = () =>(
     <Switch>
         <Route exact path='/' component={Content}/>
@@ -17,6 +18,8 @@ const MainRouter = () =>(
         <Route path='/product/:bookid' component={BookDetail}/>
         <Route path='/SearchResult' component={SearchResult}/>
         <Route path='/ShoppingCart' component={ShoppingCart}/>
+        <Route path='/ChangePassword' component={ChangePassword}/>
+        <Route path='/UpdateInfor' component={UpdateInfor}/>
     </Switch>
 );
 
