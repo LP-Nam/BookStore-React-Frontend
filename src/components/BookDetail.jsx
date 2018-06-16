@@ -13,7 +13,7 @@ class BookDetail extends React.Component {
             isCartSuccess: false,
             listComment: [{}],
             TenHienThi: null,
-            afterAddCmt: null,
+            afterAddCmt: null
         }
     }
 
@@ -60,7 +60,6 @@ class BookDetail extends React.Component {
                 }
             );
     }
-
     fetchListComment = (id) => {
         fetch(`http://localhost:3001/api/comment/getList/${id}`)
             .then(res => res.json())
@@ -148,43 +147,74 @@ class BookDetail extends React.Component {
         ':' + this.pad(date.getMinutes()) +
         ':' + this.pad(date.getSeconds());
       }
-    XuLyThemBinhLuan = () => {
-        let tmpname = this.state.TenHienThi ? this.state.TenHienThi : this.refs.usrcmt.value;
-        // let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        let tg = this.formatdate()
-        let cmt = {
-            MaSanPham: this.state.items.MaSanPham,
-            TenHienThi: tmpname,
-            NoiDung: this.refs.NoiDung.value,
-            ThoiGian: tg,
-        }
-
-        fetch('http://localhost:3001/api/comment', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                cmt: cmt,
+    KiemTraThongTin =()=>{
+        let check = 1
+        if(!localStorage.getItem('token') && this.refs.usrcmt.value == '')
+        {
+            check = 0
+            this.setState({
+                error: true
             })
-        })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        afterAddCmt: result,
-                        tongSoBinhLuan: parseInt(this.state.tongSoBinhLuan) + 1,
-                    });
-                    this.fetchListComment(this.state.items.MaSanPham);
+        }
+        else{
+            this.setState({
+                error: false
+            })
+        }
+        if(this.refs.NoiDung.value == '')
+        {
+            check = 0
+            this.setState({
+                nullVal: true
+            })
+        }
+        else{
+            this.setState({
+                nullVal: false
+            })
+        }
+        return check
+    }
+    XuLyThemBinhLuan = () => {
+        if(this.KiemTraThongTin())
+        {
+            let tmpname = this.state.TenHienThi ? this.state.TenHienThi : this.refs.usrcmt.value;
+            // let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            let tg = this.formatdate()
+            let cmt = {
+                MaSanPham: this.state.items.MaSanPham,
+                TenHienThi: tmpname,
+                NoiDung: this.refs.NoiDung.value,
+                ThoiGian: tg,
+            }
+    
+            fetch('http://localhost:3001/api/comment', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            );
+                body: JSON.stringify({
+                    cmt: cmt,
+                })
+            })
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            afterAddCmt: result,
+                            tongSoBinhLuan: parseInt(this.state.tongSoBinhLuan) + 1,
+                        });
+                        this.fetchListComment(this.state.items.MaSanPham);
+                    },
+    
+                    (error) => {
+                        this.setState({
+                            error
+                        });
+                    }
+                );
+        }
     }
 
     render() {
@@ -201,8 +231,17 @@ class BookDetail extends React.Component {
 
         let successCart = this.state.isCartSuccess ? (<div className="alert alert-success">
             <strong>Thành công!</strong> Đã thêm sách vào giỏ hàng.
-      </div>) : null;
+            </div>) : null;
 
+        let error = this.state.error?(<div className="alert alert-danger">
+            Vui lòng nhập tên hoặc đăng nhập tài khoản để bình luận !!!
+            </div>):null;
+
+        let nullVal = this.state.nullVal?(<div className="alert alert-danger">
+            Vui lòng nhập  bình luận !!!
+            </div>):null;
+
+    
         const listComment = this.state.listComment.map((comment, index) => {
             const name = comment.TenHienThi;
             const nd = comment.NoiDung;
@@ -240,7 +279,6 @@ class BookDetail extends React.Component {
                             </li>
                             <li className="list-group-item">
                                 <button type="Submit" onClick={this.XuLyThemGioHang} className="btn btn-danger" >Đặt vào giỏ hàng</button>
-
                             </li>
                             {successCart}
                         </ul>
@@ -252,6 +290,8 @@ class BookDetail extends React.Component {
                     <label htmlFor="comment">Comment:</label>
                     <textarea  className="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
                     {inputNameComment}
+                    {error}
+                    {nullVal}
                 </div>
                 <button type="button" className="btn btn-primary" onClick={this.XuLyThemBinhLuan}>Bình Luận</button>
 
