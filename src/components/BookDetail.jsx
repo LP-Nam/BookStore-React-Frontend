@@ -2,7 +2,6 @@ import React from "react";
 import BookDetailBottom from "./BookDetailBottom";
 import jwtDecode from "jwt-decode";
 import $ from "jquery";
-// import { clickDatHang } from './clickDatHang.js';
 
 class BookDetail extends React.Component {
     constructor(props) {
@@ -52,8 +51,6 @@ class BookDetail extends React.Component {
     }
 
     componentDidMount() {
-        // clickDatHang();
-
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
     }
@@ -99,6 +96,8 @@ class BookDetail extends React.Component {
                 localStorage.setItem('carts', carts);
             }
             this.setState({ isCartSuccess: true })
+            let that = this;
+            setTimeout(function(){that.setState({isCartSuccess: false})}, 5000);
         }
     }
 
