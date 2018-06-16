@@ -160,7 +160,21 @@ class ShoppingCart extends React.Component {
                 },
         );
     }
-
+    pad = (number)=>{
+        if (number < 10) {
+            return '0' + number;
+        }
+        return number;
+      }
+      formatdate = ()=>{
+        var date = new Date();
+        return  date.getFullYear() +
+        '-' + this.pad(date.getMonth() + 1) +
+        '-' + this.pad(date.getDate()) +
+        'T' + this.pad(date.getHours()) +
+        ':' + this.pad(date.getMinutes()) +
+        ':' + this.pad(date.getSeconds());
+      }
     handleDatHang = () => {
         if (localStorage.getItem('token')) {
             if (localStorage.getItem('carts')) {
@@ -174,8 +188,10 @@ class ShoppingCart extends React.Component {
                 let token = localStorage.getItem('token');
                 let user = Decode(token);
                 var MaTaiKhoan = user.MaTaiKhoan;
+                
 
-                var NgayLap = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                // var NgayLap = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                var NgayLap = this.formatdate()
 
                 var DDH = {
                     NgayLap: NgayLap,
@@ -214,31 +230,31 @@ class ShoppingCart extends React.Component {
 
         tmptt = (tmptt).toLocaleString('en');
 
-        let alertError = this.state.visibleAlert ? (<div class='alert alert-danger'><b>{this.state.ThongBao}</b></div>) : null;
-        let alertSuccess = this.state.done ? (<div class='alert alert-success'><b>Đặt hàng thành công !</b></div>) : null;
+        let alertError = this.state.visibleAlert ? (<div className='alert alert-danger'><b>{this.state.ThongBao}</b></div>) : null;
+        let alertSuccess = this.state.done ? (<div className='alert alert-success'><b>Đặt hàng thành công !</b></div>) : null;
 
         return (
             <React.Fragment>
                 {alertError}
                 {alertSuccess}
-                <table class="table table-striped" id="cartItems">
-                    <tr class="nb">
-                        <td></td>
-                        <td></td>
-                        <td><button class="btn btn-danger" onClick={this.handleDatHang}>Đặt hàng</button></td>
-                        <td><button class="btn btn-primary" onClick={this.HuyTatCa}>Hủy tất cả</button></td>
-                    </tr>
-                    <br />
-                    <tr>
-                        <td></td>
-                        <td>Tổng tiền:&nbsp;</td>
-                        <td><b>{tmptt} VNĐ</b></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <hr />
-                        {cardsContent}
-                    </tr>
+                <table className="table table-striped" id="cartItems">
+                    <tbody>
+                        <tr className="nb">
+                            <td></td>
+                            <td></td>
+                            <td><button className="btn btn-danger" onClick={this.handleDatHang}>Đặt hàng</button></td>
+                            <td><button className="btn btn-primary" onClick={this.HuyTatCa}>Hủy tất cả</button></td>
+                        </tr>
+                        <tr className="pull-left">
+                            <td></td>
+                            <td>Tổng tiền:&nbsp;</td>
+                            <td><b>{tmptt} VNĐ</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            {cardsContent}                                                                                                  
+                        </tr>
+                    </tbody>
                 </table>
 
             </React.Fragment>

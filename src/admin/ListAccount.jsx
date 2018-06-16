@@ -27,7 +27,6 @@ class ListAccount extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result);
           this.setState({
             itemsListAccount: result
           });

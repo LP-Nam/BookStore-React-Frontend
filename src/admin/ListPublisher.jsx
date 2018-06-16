@@ -44,7 +44,6 @@ class ListPublisher extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result);
           this.setState({
             itemsListPublisher: result
           });
@@ -70,13 +69,13 @@ class ListPublisher extends Component {
             else
                 icon = icon +"remove"
 			return (
-                 <tr>
+                 <tr key={"key"+value.MaHangSanXuat}>
                     <td>{value.MaHangSanXuat}</td>
                     <td>{value.TenHangSanXuat}</td>
                     <td>
-                        <Link to = {`/admin/UpdatePubliser/${value.MaHangSanXuat}`}><a>
+                        <Link to = {`/admin/UpdatePubliser/${value.MaHangSanXuat}`}>
                             <span className="glyphicon glyphicon-pencil"></span>
-                        </a></Link>
+                        </Link>
                     </td>
                     <td>
                         <a href="#"onClick={this.handleDelele.bind(this,[value.MaHangSanXuat,value.BiXoa])}>

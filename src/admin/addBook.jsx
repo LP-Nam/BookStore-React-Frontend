@@ -22,7 +22,6 @@ class addBook extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     types: result
                 });
@@ -40,7 +39,6 @@ class addBook extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     publisher: result
                 });
@@ -94,7 +92,6 @@ class addBook extends Component {
     }
     handleSubmit=(e)=>{
         e.preventDefault()
-        console.log("aaa")
         if(this.state.imageSelect != null)
         {
             this.handleUploadImage()

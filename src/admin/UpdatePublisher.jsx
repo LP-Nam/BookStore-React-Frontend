@@ -14,7 +14,6 @@ class UpdatePublisher extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     items: result
                 });
@@ -64,14 +63,14 @@ class UpdatePublisher extends Component {
             return <Redirect to = '/admin/ListPublisher' />
         }
         return (
-            <div class="panel">
-                <h2 class="page-header text-center">Cập Nhật NXB #{this.props.match.params.id}</h2>
-                <div class="panel-body">
-                    <form onSubmit={this.handleSubmit} class="frmEdit w40p center-block">
+            <div className="panel">
+                <h2 className="page-header text-center">Cập Nhật NXB #{this.props.match.params.id}</h2>
+                <div className="panel-body">
+                    <form onSubmit={this.handleSubmit} className="frmEdit w40p center-block">
                         Tên NXB: 
-                            <input onChange={this.handleInput} type="text" class="form-control" value={this.state.items[0].TenHangSanXuat} autofocus ="true" ref="TenNXB"></input>
+                            <input onChange={this.handleInput} type="text" className="form-control" value={this.state.items[0].TenHangSanXuat} autoFocus ="true" ref="TenNXB"></input>
                             <br></br>
-                            <button type="submit" class="btn btn-primary center-block">Lưu</button>
+                            <button type="submit" className="btn btn-primary center-block">Lưu</button>
                     </form>
                 </div>
             </div>

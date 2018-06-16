@@ -18,7 +18,7 @@ class InfoAccount extends React.Component {
                 <div className="container" id="topBar">
                     <div className="navbar navbar-inverse">
                         <ul className="nav pull-right">
-                            <li className="dropdown"><a href="#" className="dropdown-toggle" data-toggle="dropdown">Welcome, {TenHienThi} <b className="caret"></b></a>
+                            <li className="dropdown"><a href="#" className="dropdown-toggle" data-toggle="dropdown">Xin chào, {TenHienThi} <b className="caret"></b></a>
                                 <ul className="dropdown-menu">
                                     {ad}
                                     <li><Link to="/UpdateInfor"><i className="glyphicon glyphicon-pencil"></i> Cập nhật thông tin</Link></li>

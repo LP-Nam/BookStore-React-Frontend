@@ -22,7 +22,6 @@ class UpdateBook extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     types: result
                 });
@@ -40,7 +39,6 @@ class UpdateBook extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     publisher: result
                 });
@@ -58,7 +56,6 @@ class UpdateBook extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
                     this.setState({
                         items: result
                     });

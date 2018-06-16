@@ -74,17 +74,19 @@ class CartContent extends React.Component {
         return (
             <React.Fragment>
                 <table>
-                    <tr>
-                        <td width="20%">
-                            <input type="hidden" name="MaSanPham" value={this.state.items.MaSanPham} />
-                            <Card key={"key_" + ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/" + url} />
-                        </td>
-                        <td>&nbsp;</td>
-                        <td><input type="number" class="form-control wA" name="txtSoLuong" id="txtSoLuong" ref="txtSoLuong" defaultValue={this.props.SoLuong} onChange={this.handleChange} />{alert}</td>
-                        <td><button type="button" name="action" value="CapNhat" class="btn btn-success" disabled={this.state.isAlert} onClick={this.handleClickUpdate}> Cập nhật</button></td>
-                        <td><button type="button" name="action" value="Huy" class="btn btn-info" onClick={this.props.handleClickHuy}>Hủy</button>
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td width="20%">
+                                <input type="hidden" name="MaSanPham" value={this.state.items.MaSanPham} />
+                                <Card key={"key_" + ma} tenSach={ten} tenTacGia={tacGia} giaBan={gia} maSach={ma} hinhAnh={"http://localhost:3001/images/Product/" + url} />
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><input type="number" className="form-control wA" name="txtSoLuong" id="txtSoLuong" ref="txtSoLuong" defaultValue={this.props.SoLuong} onChange={this.handleChange} />{alert}</td>
+                            <td><button type="button" name="action" value="CapNhat" className="btn btn-success" disabled={this.state.isAlert} onClick={this.handleClickUpdate}> Cập nhật</button></td>
+                            <td><button type="button" name="action" value="Huy" className="btn btn-info" onClick={this.props.handleClickHuy}>Hủy</button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </React.Fragment>
         )

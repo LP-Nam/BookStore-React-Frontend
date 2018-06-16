@@ -53,7 +53,6 @@ class Content extends React.Component{
     .then(res => res.json())
     .then(
       (result) => {
-      	console.log(result);
         this.setState({
           newItems: result
         });
@@ -70,7 +69,6 @@ class Content extends React.Component{
     .then(res => res.json())
     .then(
       (result) => {
-      	console.log(result);
         this.setState({
           mostPopularItems: result
         });

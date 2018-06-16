@@ -14,7 +14,6 @@ class Search extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     types: result
                 });
@@ -32,7 +31,6 @@ class Search extends Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 this.setState({
                     publisher: result
                 });
@@ -66,12 +64,12 @@ class Search extends Component {
         })
         var giatu= []
         for (let index = 15000; index <= 200000; index+=25000) {
-            giatu.push(	<option value={index}>{index}</option>)
+            giatu.push(	<option key={index} value={index}>{index}</option>)
             
         }
         var giaden = []
         for (let index = 200000; index >= 15000; index-=25000) {
-            giaden.push(	<option value={index}>{index}</option>)
+            giaden.push(	<option key={index} value={index}>{index}</option>)
             
         }
         return (

@@ -133,10 +133,25 @@ class BookDetail extends React.Component {
             setTimeout(function () { that.setState({ isCartSuccess: false }) }, 5000);
         }
     }
-
+    pad = (number)=>{
+        if (number < 10) {
+            return '0' + number;
+        }
+        return number;
+      }
+      formatdate = ()=>{
+        var date = new Date();
+        return  date.getFullYear() +
+        '-' + this.pad(date.getMonth() + 1) +
+        '-' + this.pad(date.getDate()) +
+        'T' + this.pad(date.getHours()) +
+        ':' + this.pad(date.getMinutes()) +
+        ':' + this.pad(date.getSeconds());
+      }
     XuLyThemBinhLuan = () => {
         let tmpname = this.state.TenHienThi ? this.state.TenHienThi : this.refs.usrcmt.value;
-        let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        // let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let tg = this.formatdate()
         let cmt = {
             MaSanPham: this.state.items.MaSanPham,
             TenHienThi: tmpname,
@@ -180,8 +195,11 @@ class BookDetail extends React.Component {
         let styleName = {
             width: 500
         };
+        let styleTime = {
+            color: "#999999"
+        }
 
-        let successCart = this.state.isCartSuccess ? (<div class="alert alert-success">
+        let successCart = this.state.isCartSuccess ? (<div className="alert alert-success">
             <strong>Thành công!</strong> Đã thêm sách vào giỏ hàng.
       </div>) : null;
 
@@ -192,15 +210,15 @@ class BookDetail extends React.Component {
             let date=new Date(tmp);
             const time = date.toLocaleString();
             return (
-                <React.Fragment>
-                    <b>{name}</b> <i>{time}</i> <br />
+                <React.Fragment key={index}>
+                    <b>{name}</b> <i style={styleTime}>{time}</i> <br/>
                     <span>{nd}</span> <hr />
                 </React.Fragment>
             );
         });
 
-        const inputNameComment = this.state.TenHienThi ? null : (<span><label for="usr">Name:</label>
-            <input type="text" class="form-control" id="usr" ref="usrcmt" style={styleName} placeholder="Nhập tên của bạn" /></span>);
+        const inputNameComment = localStorage.getItem('token') ? null : (<span><label htmlFor="usr">Name:</label>
+            <input type="text" className="form-control" id="usr" ref="usrcmt" style={styleName} placeholder="Nhập tên của bạn" /></span>);
 
         return (
             <React.Fragment>
@@ -230,16 +248,15 @@ class BookDetail extends React.Component {
                 </div>
                 <BookDetailBottom MaSanPham={this.state.items.MaSanPham} MaLoaiSanPham={this.state.items.MaLoaiSanPham} />
 
-                <div class="form-group">
-                    <label for="comment">Comment:</label>
-                    <textarea class="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
-
+                <div className="form-group">
+                    <label htmlFor="comment">Comment:</label>
+                    <textarea  className="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
                     {inputNameComment}
                 </div>
-                <button type="button" class="btn btn-primary" onClick={this.XuLyThemBinhLuan}>Bình Luận</button>
+                <button type="button" className="btn btn-primary" onClick={this.XuLyThemBinhLuan}>Bình Luận</button>
 
                 <hr />
-                <h4>Bình luận của bạn đọc <span class="label label-default">{this.state.tongSoBinhLuan}</span></h4>
+                <h4>Bình luận của bạn đọc <span className="label label-default">{this.state.tongSoBinhLuan}</span></h4>
                 <div>
                     {listComment}
                 </div>

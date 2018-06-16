@@ -21,11 +21,6 @@ class Card extends Component {
 		str = str.substr(0,15)+"...";
 		return  str;
 	}
-	editCost()
-	{
-		var str = new String(this.props.giaBan)
-		str = str.lastIndexOf()
-	}
 	render() {
 		return(
 			<div className="w12e pull-left" title={this.props.tenSach}>
