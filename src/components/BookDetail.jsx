@@ -132,43 +132,41 @@ class BookDetail extends React.Component {
             setTimeout(function () { that.setState({ isCartSuccess: false }) }, 5000);
         }
     }
-    pad = (number)=>{
+    pad = (number) => {
         if (number < 10) {
             return '0' + number;
         }
         return number;
-      }
-      formatdate = ()=>{
+    }
+    formatdate = () => {
         var date = new Date();
-        return  date.getFullYear() +
-        '-' + this.pad(date.getMonth() + 1) +
-        '-' + this.pad(date.getDate()) +
-        'T' + this.pad(date.getHours()) +
-        ':' + this.pad(date.getMinutes()) +
-        ':' + this.pad(date.getSeconds());
-      }
-    KiemTraThongTin =()=>{
+        return date.getFullYear() +
+            '-' + this.pad(date.getMonth() + 1) +
+            '-' + this.pad(date.getDate()) +
+            'T' + this.pad(date.getHours()) +
+            ':' + this.pad(date.getMinutes()) +
+            ':' + this.pad(date.getSeconds());
+    }
+    KiemTraThongTin = () => {
         let check = 1
-        if(!localStorage.getItem('token') && this.refs.usrcmt.value == '')
-        {
+        if (!localStorage.getItem('token') && this.refs.usrcmt.value == '') {
             check = 0
             this.setState({
                 error: true
             })
         }
-        else{
+        else {
             this.setState({
                 error: false
             })
         }
-        if(this.refs.NoiDung.value == '')
-        {
+        if (this.refs.NoiDung.value == '') {
             check = 0
             this.setState({
                 nullVal: true
             })
         }
-        else{
+        else {
             this.setState({
                 nullVal: false
             })
@@ -176,8 +174,7 @@ class BookDetail extends React.Component {
         return check
     }
     XuLyThemBinhLuan = () => {
-        if(this.KiemTraThongTin())
-        {
+        if (this.KiemTraThongTin()) {
             let tmpname = this.state.TenHienThi ? this.state.TenHienThi : this.refs.usrcmt.value;
             // let tg = new Date().toISOString().slice(0, 19).replace('T', ' ');
             let tg = this.formatdate()
@@ -187,7 +184,7 @@ class BookDetail extends React.Component {
                 NoiDung: this.refs.NoiDung.value,
                 ThoiGian: tg,
             }
-    
+
             fetch('http://localhost:3001/api/comment', {
                 method: 'POST',
                 headers: {
@@ -207,7 +204,7 @@ class BookDetail extends React.Component {
                         });
                         this.fetchListComment(this.state.items.MaSanPham);
                     },
-    
+
                     (error) => {
                         this.setState({
                             error
@@ -233,24 +230,24 @@ class BookDetail extends React.Component {
             <strong>Thành công!</strong> Đã thêm sách vào giỏ hàng.
             </div>) : null;
 
-        let error = this.state.error?(<div className="alert alert-danger">
+        let error = this.state.error ? (<div className="alert alert-danger">
             Vui lòng nhập tên hoặc đăng nhập tài khoản để bình luận !!!
-            </div>):null;
+            </div>) : null;
 
-        let nullVal = this.state.nullVal?(<div className="alert alert-danger">
+        let nullVal = this.state.nullVal ? (<div className="alert alert-danger">
             Vui lòng nhập  bình luận !!!
-            </div>):null;
+            </div>) : null;
 
-    
+
         const listComment = this.state.listComment.map((comment, index) => {
             const name = comment.TenHienThi;
             const nd = comment.NoiDung;
-            let tmp=comment.ThoiGian;
-            let date=new Date(tmp);
+            let tmp = comment.ThoiGian;
+            let date = new Date(tmp);
             const time = date.toLocaleString();
             return (
                 <React.Fragment key={index}>
-                    <b>{name}</b> <i style={styleTime}>{time}</i> <br/>
+                    <b>{name}</b> <i style={styleTime}>{time}</i> <br />
                     <span>{nd}</span> <hr />
                 </React.Fragment>
             );
@@ -258,6 +255,8 @@ class BookDetail extends React.Component {
 
         const inputNameComment = localStorage.getItem('token') ? null : (<span><label htmlFor="usr">Name:</label>
             <input type="text" className="form-control" id="usr" ref="usrcmt" style={styleName} placeholder="Nhập tên của bạn" /></span>);
+
+        const tmpGia = this.state.items.GiaSanPham ? (this.state.items.GiaSanPham).toLocaleString('en') : null;
 
         return (
             <React.Fragment>
@@ -273,7 +272,7 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Thể loại: </b>{this.state.items.TenLoaiSanPham}</li>
                             <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
                             <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
-                            <li className="list-group-item"><h4>Giá: <span className="price">{this.state.items.GiaSanPham} VNĐ</span></h4></li>
+                            <li className="list-group-item"><h4>Giá: <span className="price">{tmpGia} VNĐ</span></h4></li>
                             <li className="list-group-item">
                                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
                             </li>
@@ -288,7 +287,7 @@ class BookDetail extends React.Component {
 
                 <div className="form-group">
                     <label htmlFor="comment">Comment:</label>
-                    <textarea  className="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
+                    <textarea className="form-control" rows="5" id="comment" ref="NoiDung" style={styleCmt} placeholder="Bạn nghĩ gì về sách này?"></textarea>
                     {inputNameComment}
                     {error}
                     {nullVal}
