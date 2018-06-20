@@ -36,8 +36,9 @@ class BookByCategory extends React.Component {
   }
 
   render() {
+    let TenLoaiSanPham = this.state.itemsByCategory[0] ? this.state.itemsByCategory[0].TenLoaiSanPham : 'Hiện chưa có sách của thể loại này';
     return (
-      <ListCards items={this.state.itemsByCategory} nameHeader='Sách Theo Thể Loại' />
+      <ListCards items={this.state.itemsByCategory} nameHeader={TenLoaiSanPham} />
     )
   }
 }

@@ -25,7 +25,7 @@ class InfoAccount extends React.Component {
                                     <li><Link to="/UpdateInfor"><i className="glyphicon glyphicon-pencil"></i> Cập nhật thông tin</Link></li>
                                     <li><Link to="/ChangePassword"><i className="glyphicon glyphicon-lock"></i> Đổi mật khẩu</Link></li>
                                     <li className="divider"></li>
-                                    <li><a href="#" onClick={this.DangXuatHandle}><i className="glyphicon glyphicon-off"></i> Đăng xuất</a></li>
+                                    <li><a onClick={this.DangXuatHandle}><i className="glyphicon glyphicon-off"></i> Đăng xuất</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -36,8 +36,9 @@ class BookByPublisher extends React.Component {
   }
 
   render() {
+    let TenHangSanXuat = this.state.items[0] ? this.state.items[0].TenHangSanXuat : 'Hiện chưa có sách của NXB này';
     return (
-      <ListCards items={this.state.items} nameHeader='Sách Theo Nhà Xuất Bản' />
+      <ListCards items={this.state.items} nameHeader={TenHangSanXuat} />
     )
   }
 }
