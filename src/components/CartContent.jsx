@@ -83,7 +83,7 @@ class CartContent extends React.Component {
                             <td>&nbsp;</td>
                             <td><input type="number" className="form-control wA" name="txtSoLuong" id="txtSoLuong" ref="txtSoLuong" defaultValue={this.props.SoLuong} onChange={this.handleChange} />{alert}</td>
                             <td><button type="button" name="action" value="CapNhat" className="btn btn-success" disabled={this.state.isAlert} onClick={this.handleClickUpdate}> Cập nhật</button></td>
-                            <td><button type="button" name="action" value="Huy" className="btn btn-info" onClick={this.props.handleClickHuy}>Hủy</button>
+                            <td><button type="button" name="action" value="Huy" className="btn btn-danger" onClick={this.props.handleClickHuy}>Xóa</button>
                             </td>
                         </tr>
                     </tbody>

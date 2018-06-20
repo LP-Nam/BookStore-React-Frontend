@@ -103,6 +103,7 @@ class ShoppingCart extends React.Component {
             .then(
                 (result) => {
                     this.CapNhatSoLuongTon(CT.MaSanPham, CT.SoLuong);
+                    this.updateQuantitySold(CT.MaSanPham, CT.SoLuong);
                     callback();
                 },
 
@@ -130,10 +131,36 @@ class ShoppingCart extends React.Component {
                     that.setState({
                         done: true,
                         items: null,
+                        visibleAlert: false
                     });
                 }
             });
         }
+    }
+
+    updateQuantitySold = (MaSanPham, SoLuongBan) => {
+        fetch('http://localhost:3001/api/product/updateQuantitySold', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaSanPham: MaSanPham,
+                SoLuongBan: SoLuongBan,
+            })
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                },
+
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                },
+        );
     }
 
     CapNhatSoLuongTon = (MaSanPham, SoLuong) => {
@@ -242,8 +269,8 @@ class ShoppingCart extends React.Component {
                         <tr className="nb">
                             <td></td>
                             <td></td>
-                            <td><button className="btn btn-danger" onClick={this.handleDatHang}>Đặt hàng</button></td>
-                            <td><button className="btn btn-primary" onClick={this.HuyTatCa}>Hủy tất cả</button></td>
+                            <td><button className="btn btn-primary" onClick={this.handleDatHang}>Đặt hàng</button></td>
+                            <td><button className="btn btn-danger" onClick={this.HuyTatCa}>Hủy tất cả</button></td>
                         </tr>
                         <tr className="pull-left">
                             <td></td>

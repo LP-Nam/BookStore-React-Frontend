@@ -10,7 +10,8 @@ class Navigation extends React.Component{
                         <li><Link to="/admin/ListBook">Sách</Link></li>
                         <li><Link to="/admin/ListBookType">Thể loại sách</Link></li>
                         <li><Link to="/admin/ListPublisher">Nhà xuất bản</Link></li>
-                        <li><Link to="/admin/ListAccount">Quản lý tài khoản</Link></li>		
+                        <li><Link to="/admin/ListAccount">Quản lý tài khoản</Link></li>
+                        <li><Link to="/admin/Top10">| Thống kê TOP 10 sản phẩm bán chạy</Link></li>
                     </ul>
                 </div>
             </div>

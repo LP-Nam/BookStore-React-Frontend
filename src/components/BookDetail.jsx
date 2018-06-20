@@ -78,7 +78,23 @@ class BookDetail extends React.Component {
             );
     }
 
+    updateView = (id) => {
+        fetch(`http://localhost:3001/api/product/viewUpdate/${id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                },
+
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            );
+    }
+
     componentDidMount() {
+        this.updateView(this.props.match.params.bookid);
         this.getTenHienThi();
         this.fetchAPI(this.props.match.params.bookid);
         this.fetchAPIComment(this.props.match.params.bookid);
@@ -86,10 +102,12 @@ class BookDetail extends React.Component {
     }
 
     componentWillReceiveProps(newprops) {
+        this.updateView(newprops.match.params.bookid);
         this.getTenHienThi();
         this.fetchAPI(newprops.match.params.bookid);
         this.fetchAPIComment(newprops.match.params.bookid);
         this.fetchListComment(newprops.match.params.bookid);
+        this.setState({isCartSuccess:false});
     }
 
     XuLyThemGioHang = () => {
@@ -271,7 +289,8 @@ class BookDetail extends React.Component {
                             <li className="list-group-item"><b>Nhà xuất bản: </b>{this.state.items.TenHangSanXuat}</li>
                             <li className="list-group-item"><b>Thể loại: </b>{this.state.items.TenLoaiSanPham}</li>
                             <li className="list-group-item"><b>Giới thiệu: </b>{this.state.items.MoTa}</li>
-                            <li className="list-group-item"><b>Số lượng còn:</b>{this.state.items.SoLuongTon} quyển</li>
+                            <li className="list-group-item"><b>Lượt xem: </b>{this.state.items.SoLuocXem}</li>
+                            <li className="list-group-item"><b>Số lượng tồn:</b>{this.state.items.SoLuongTon} quyển</li>
                             <li className="list-group-item"><h4>Giá: <span className="price">{tmpGia} VNĐ</span></h4></li>
                             <li className="list-group-item">
                                 Số lượng: <input type="text" defaultValue="1" className="list-group-item" name="txtSoLuongNhap" id="txtSoLuongNhap" ref="txtSoLuongNhap" />
