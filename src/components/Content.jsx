@@ -13,10 +13,10 @@ class Content extends React.Component{
     this.state = {
       newItems: [{}],
       mostPopularItems: [{}],
-      numberOfMostPopularPages: 20,
+      numberOfMostPopularPages: 10,
       numberOfNewPages: 10,
       currentNewPageIndex: 1,
-      currentMostPopularPageIndex: 11
+      currentMostPopularPageIndex: 1
     }
   }
 

@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 class InfoAccount extends React.Component {
     DangXuatHandle = () => {
         localStorage.removeItem('token');
+        this.props.signOut();
     }
 
     render() {

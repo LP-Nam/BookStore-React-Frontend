@@ -9,7 +9,6 @@ class SignIn extends React.Component {
         this.state = {
             message: 'ok',
             token: '',
-            isLogined: false
         }
         this.onClickHandle = this.onClickHandle.bind(this)
     }
@@ -34,12 +33,12 @@ class SignIn extends React.Component {
                     // save  localStoraged
                     if (result.message == 'ok') {
                         localStorage.setItem('token', result.token);
+                        this.props.setLogged();
                     }
                     // direct /account
                     this.setState({
                         message: result.message,
                         token: result.token,
-                        isLogined: result.message == 'ok' ? true : false,
                     });
                 },
 
@@ -52,9 +51,9 @@ class SignIn extends React.Component {
     }
 
     render() {
-        if (this.state.isLogined) {
-            return <Redirect to="/" />
-        }
+        // if (this.state.isLogined) {
+        //     return <Redirect to="/" />
+        // }
         let msg = this.state.message != 'ok' ? (<div className="alert alert-danger">
             <strong>Đăng nhập không thành công!</strong> Sai <strong>Tên Đăng Nhập</strong> hoặc <strong>Mật Khẩu</strong>
         </div>) : null;
