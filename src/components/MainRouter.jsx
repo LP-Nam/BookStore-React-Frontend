@@ -9,6 +9,8 @@ import SearchResult from "./SearchResult";
 import ShoppingCart from "./ShoppingCart";
 import ChangePassword from "./ChangePassword";
 import UpdateInfor from "./UpdateInfo";
+import History from "./History";
+import HistoryDetail from "./HisotryDetail";
 const MainRouter = () =>(
     <Switch>
         <Route exact path='/' component={Content}/>
@@ -20,6 +22,8 @@ const MainRouter = () =>(
         <Route path='/ShoppingCart' component={ShoppingCart}/>
         <Route path='/ChangePassword' component={ChangePassword}/>
         <Route path='/UpdateInfor' component={UpdateInfor}/>
+        <Route path='/History' component={History}/>
+        <Route path='/HistoryDetail/:id' component={HistoryDetail}/>
     </Switch>
 );
 

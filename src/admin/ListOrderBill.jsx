@@ -2,8 +2,6 @@ import React from "react";
 import OrderBill from "./OrderBill";
 import Search from "./SearchOrderBill";
 import queryString from 'query-string';
-import Detail from "./OrderbillDetail";
-import $ from 'jquery';
 class ListOrderBill extends React.Component {
     constructor(props) {
         super(props);

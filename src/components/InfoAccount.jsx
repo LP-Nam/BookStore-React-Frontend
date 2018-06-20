@@ -13,7 +13,8 @@ class InfoAccount extends React.Component {
         let user = jwtDecode(token);
         let TenHienThi = user.TenHienThi;
         let loaiTK = user.MaLoaiTaiKhoan;
-        let ad = loaiTK == 2 ? (<li><Link to="/admin"><i className="glyphicon glyphicon-user"></i>  Trang quản lý</Link></li>) : (null);
+        let ad = loaiTK == 2 ? (<li><Link to="/admin"><i className="glyphicon glyphicon-user"></i>  Trang quản lý</Link></li>) : 
+                                (<li><Link to="/History"><i className="glyphicon glyphicon-edit"></i> Lịch sử mua hàng</Link></li>);
         
         return (
                 <div className="container" id="topBar">
